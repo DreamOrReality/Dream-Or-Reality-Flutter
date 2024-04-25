@@ -52,6 +52,10 @@ class HomeScreen extends StatelessWidget {
             ),
             // 게시글 컨테이너
             Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Color(0xFFEAEAEA), width: 2.0)),
+              ),
               child: Column(
                 children: [
                   Padding(
@@ -90,6 +94,7 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
