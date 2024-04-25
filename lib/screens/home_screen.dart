@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
 import '../widgets/bottom_navtion_bar_widget.dart';
+import '../widgets/home_circularchart_widget.dart';
 import '../widgets/home_my_post_widget.dart';
 import '../widgets/home_my_project_widget.dart';
 
@@ -144,6 +145,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            const CircularChart(),
             // bottom navigation Bar
             MyBottomNavigationBar(
               currentIndex: 0,
