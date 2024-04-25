@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // 상단 성향 테스트 배너
+            // 상단 성향 테스트 배너 (누르면 페이지 이동 로직 구현할 것)
             Container(
               padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
               color: primaryColor,
@@ -50,9 +50,112 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            // 게시글 컨테이너
+            Container(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    // 유저이름과 "게시글" 텍스트 분리 (스타일이 달라서)
+                    child: Row(
+                      children: [
+                        const Text(
+                          '햄지님의', //이 부분에 로그인된 유저 이름을 불러올 것
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          ' "게시글"',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        // for문으로 데이터 빌드하면 될듯
+                        _buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
+                            '8월 5일 ~ 8월 25일', 1, 3),
+                        const SizedBox(width: 10),
+                        _buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
+                            '8월 5일 ~ 8월 25일', 1, 3),
+                        const SizedBox(width: 10),
+                        _buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
+                            '8월 5일 ~ 8월 25일', 1, 3),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+Widget _buildMyPost(BuildContext context, String prjName, String tag,
+    String period, int p1, int p2) {
+  return Container(
+    padding: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      border: Border.all(color: secondaryColor),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          prjName,
+          style: const TextStyle(fontSize: 17),
+        ),
+        const SizedBox(height: 5),
+        Container(
+          padding: const EdgeInsets.fromLTRB(5, 3, 5, 3),
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xFFEAEAEA)),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            tag,
+            style: const TextStyle(color: Color(0xFF8E8E8F)),
+          ),
+        ),
+        const SizedBox(height: 5),
+        const Text(
+          '기간',
+          style: TextStyle(
+            fontSize: 13,
+            color: Color(0xFF8E8E8F),
+          ),
+        ),
+        Text(period),
+        const SizedBox(height: 7),
+        const Text('인원'),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            Icon(
+              Icons.person,
+              size: 20,
+              color: primaryColor,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              p1.toString(),
+              style: TextStyle(color: primaryColor),
+            ),
+            const Text('/'),
+            Text(p2.toString()),
+          ],
+        ),
+      ],
+    ),
+  );
 }
