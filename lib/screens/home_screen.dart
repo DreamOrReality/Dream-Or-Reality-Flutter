@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(20),
-                    // 유저이름과 "게시글" 텍스트 분리 (스타일이 달라서)
+                    // 햄지님의 "게시글" - 유저이름과 "게시글" 텍스트 분리 (스타일이 달라서)
                     child: Row(
                       children: [
                         const Text(
@@ -78,6 +78,7 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // 내 게시글을 빌드하는 곳 (예시 3개 넣어둠)
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -96,6 +97,46 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                 ],
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Color(0xFFEAEAEA), width: 2.0)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    // `유저이름`님이 진행중인 "프로젝트"
+                    Row(
+                      children: [
+                        const Text(
+                          '햄지님이 진행중인',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          ' "프로젝트"',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: primaryColor),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    // for문으로 데이터 빌드하면 될듯
+                    // 예시 데이터 3개 넣어둠
+                    _buildMyProject(
+                        context, '미림 해커톤', '백엔드 개발자', '2023년 08월 04일 23:40'),
+                    const SizedBox(height: 10),
+                    _buildMyProject(
+                        context, '미림 해커톤', '백엔드 개발자', '2023년 08월 04일 23:40'),
+                    const SizedBox(height: 10),
+                    _buildMyProject(
+                        context, '미림 해커톤', '백엔드 개발자', '2023년 08월 04일 23:40'),
+                  ],
+                ),
               ),
             ),
           ],
@@ -159,6 +200,47 @@ Widget _buildMyPost(BuildContext context, String prjName, String tag,
             const Text('/'),
             Text(p2.toString()),
           ],
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _buildMyProject(
+    BuildContext context, String prjName, String myRole, String period) {
+  return Container(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(prjName),
+            const SizedBox(width: 10),
+            Container(
+              padding: const EdgeInsets.fromLTRB(5, 3, 5, 3),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFFEAEAEA)),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                myRole,
+                style: const TextStyle(color: Color(0xFF8E8E8F), fontSize: 10),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 7),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: primaryColor,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Text(
+            '👉 마감일 - $period',
+            style: const TextStyle(color: Colors.white, fontSize: 12),
+          ),
         ),
       ],
     ),
