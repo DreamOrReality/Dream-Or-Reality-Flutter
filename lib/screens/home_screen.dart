@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
+import '../widgets/bottom_navtion_bar_widget.dart';
+import '../widgets/home_my_post_widget.dart';
+import '../widgets/home_my_project_widget.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -84,13 +88,13 @@ class HomeScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         // for문으로 데이터 빌드하면 될듯
-                        _buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
+                        buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
                             '8월 5일 ~ 8월 25일', 1, 3),
                         const SizedBox(width: 10),
-                        _buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
+                        buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
                             '8월 5일 ~ 8월 25일', 1, 3),
                         const SizedBox(width: 10),
-                        _buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
+                        buildMyPost(context, 'IT 서비스 공모전', '디자이너 모집',
                             '8월 5일 ~ 8월 25일', 1, 3),
                       ],
                     ),
@@ -128,123 +132,28 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(height: 15),
                     // for문으로 데이터 빌드하면 될듯
                     // 예시 데이터 3개 넣어둠
-                    _buildMyProject(
+                    buildMyProject(
                         context, '미림 해커톤', '백엔드 개발자', '2023년 08월 04일 23:40'),
                     const SizedBox(height: 10),
-                    _buildMyProject(
+                    buildMyProject(
                         context, '미림 해커톤', '백엔드 개발자', '2023년 08월 04일 23:40'),
                     const SizedBox(height: 10),
-                    _buildMyProject(
+                    buildMyProject(
                         context, '미림 해커톤', '백엔드 개발자', '2023년 08월 04일 23:40'),
                   ],
                 ),
               ),
             ),
-            Container(),
+            // bottom navigation Bar
+            MyBottomNavigationBar(
+              currentIndex: 0,
+              onTap: (index) {
+                // 바텀 네비게이션 탭 처리 로직 추가
+              },
+            ),
           ],
         ),
       ),
     );
   }
-}
-
-Widget _buildMyPost(BuildContext context, String prjName, String tag,
-    String period, int p1, int p2) {
-  return Container(
-    padding: const EdgeInsets.all(20),
-    decoration: BoxDecoration(
-      border: Border.all(color: secondaryColor),
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          prjName,
-          style: const TextStyle(fontSize: 17),
-        ),
-        const SizedBox(height: 5),
-        Container(
-          padding: const EdgeInsets.fromLTRB(5, 3, 5, 3),
-          decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xFFEAEAEA)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(
-            tag,
-            style: const TextStyle(color: Color(0xFF8E8E8F)),
-          ),
-        ),
-        const SizedBox(height: 5),
-        const Text(
-          '기간',
-          style: TextStyle(
-            fontSize: 13,
-            color: Color(0xFF8E8E8F),
-          ),
-        ),
-        Text(period),
-        const SizedBox(height: 7),
-        const Text('인원'),
-        const SizedBox(height: 5),
-        Row(
-          children: [
-            Icon(
-              Icons.person,
-              size: 20,
-              color: primaryColor,
-            ),
-            const SizedBox(width: 5),
-            Text(
-              p1.toString(),
-              style: TextStyle(color: primaryColor),
-            ),
-            const Text('/'),
-            Text(p2.toString()),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _buildMyProject(
-    BuildContext context, String prjName, String myRole, String period) {
-  return Container(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(prjName),
-            const SizedBox(width: 10),
-            Container(
-              padding: const EdgeInsets.fromLTRB(5, 3, 5, 3),
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFEAEAEA)),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                myRole,
-                style: const TextStyle(color: Color(0xFF8E8E8F), fontSize: 10),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 7),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-            color: primaryColor,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Text(
-            '👉 마감일 - $period',
-            style: const TextStyle(color: Colors.white, fontSize: 12),
-          ),
-        ),
-      ],
-    ),
-  );
 }

@@ -7,6 +7,7 @@ environment:
   sdk: '>=3.3.3 <4.0.0'
 
 dependencies:
+  bottom_navigation_bar: ^1.0.1
   flutter:
     sdk: flutter
 
@@ -19,3 +20,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/img/illustration/developer.png
+    - assets/img/icon/home.png
+    - assets/img/icon/document.png
+    - assets/img/icon/chat.png
+    - assets/img/icon/notebook.png
+    - assets/img/icon/user.png

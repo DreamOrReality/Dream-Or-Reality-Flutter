@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bottom_navigation_bar:
+    dependency: "direct main"
+    description:
+      name: bottom_navigation_bar
+      sha256: ef7d76e15fe0f5aef8b788151c22baf1120e69bfcc7ab139b7033aea9ba59702
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   characters:
     dependency: transitive
     description:
@@ -168,6 +176,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  tabnavigator:
+    dependency: transitive
+    description:
+      name: tabnavigator
+      sha256: "0e449c1c92114f258917a0406c5e324a649c8ded0784f63b62daa78d31501333"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:
