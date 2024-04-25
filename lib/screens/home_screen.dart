@@ -148,7 +148,14 @@ class HomeScreen extends StatelessWidget {
             MyBottomNavigationBar(
               currentIndex: 0,
               onTap: (index) {
-                // 바텀 네비게이션 탭 처리 로직 추가
+                switch (index) {
+                  case 0:
+                    Navigator.pushNamed(context, '/');
+                    break;
+                  case 1:
+                    Navigator.pushNamed(context, '/study');
+                    break;
+                }
               },
             ),
           ],
