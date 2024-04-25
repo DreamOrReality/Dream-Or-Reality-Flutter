@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // 게시글 컨테이너
+            // 나의 게시글 컨테이너
             Container(
               decoration: const BoxDecoration(
                 border: Border(
@@ -99,6 +99,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            // 나의 프로젝트 컨테이너
             Container(
               decoration: const BoxDecoration(
                 border: Border(
@@ -139,6 +140,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            Container(),
           ],
         ),
       ),
