@@ -17,7 +17,7 @@ Widget buildProjectPost(BuildContext context, String postTitle,
           children: [
             // 모집중 버튼 (구현할거야?)
             Container(
-              padding: const EdgeInsets.fromLTRB(5, 3, 5, 7),
+              padding: const EdgeInsets.fromLTRB(5, 3, 5, 3),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
                 color: primaryColor,

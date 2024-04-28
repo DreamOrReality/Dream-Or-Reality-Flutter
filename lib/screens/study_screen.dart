@@ -29,6 +29,7 @@ class StudyScreen extends StatelessWidget {
           children: [
             // 모집여부 / 시간 / 하트 / 조회수 / 코멘트 수는 클래스 처리 안했어요 필요하면 하시길..
             // 예시 데이터 세개
+            // 이거 리스트뷰로 해야하나
             buildProjectPost(context, 'IT 서비스 공모전에 참여하실 디자이너를 모집합니다!',
                 '상금이 500만원인 공모전에 참여하실 디자이너 분을 모집합니다.', '디자이너 모집', '김햄지'),
             buildProjectPost(context, '미소챌 백엔드 개발자를 구합니다.',
