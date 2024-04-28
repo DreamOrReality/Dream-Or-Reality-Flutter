@@ -38,8 +38,19 @@ class StudyScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: // bottom navigation bar
-          MyBottomNavigationBar(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        backgroundColor: primaryColor,
+        icon: const Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
+        label: const Text(
+          '글쓰기',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+      bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,
         onTap: (index) {
           switch (index) {
