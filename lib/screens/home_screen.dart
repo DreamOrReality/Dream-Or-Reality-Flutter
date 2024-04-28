@@ -147,21 +147,21 @@ class HomeScreen extends StatelessWidget {
             ),
             const CircularChart(),
             // bottom navigation Bar
-            MyBottomNavigationBar(
-              currentIndex: 0,
-              onTap: (index) {
-                switch (index) {
-                  case 0:
-                    Navigator.pushNamed(context, '/');
-                    break;
-                  case 1:
-                    Navigator.pushNamed(context, '/study');
-                    break;
-                }
-              },
-            ),
           ],
         ),
+      ),
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: 0,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/study');
+              break;
+          }
+        },
       ),
     );
   }

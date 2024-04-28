@@ -35,22 +35,22 @@ class StudyScreen extends StatelessWidget {
                 '미소챌에서 검은 화면을 보실 백엔드 디자이너분은 댓글 주세요!', '백엔드 모집', '짹현이'),
             buildProjectPost(context, '미림 해커톤에 같이 나가실 선배분을 구합니다 ㅠㅠ',
                 '해커톤에 처음 나가게 되어 팀에 피해가 될까봐 저를 지원사격 해주실...', '개발자 모집', '짱지안'),
-            // bottom navigation bar
-            MyBottomNavigationBar(
-              currentIndex: 0,
-              onTap: (index) {
-                switch (index) {
-                  case 0:
-                    Navigator.pushNamed(context, '/');
-                    break;
-                  case 1:
-                    Navigator.pushNamed(context, '/study');
-                    break;
-                }
-              },
-            ),
           ],
         ),
+      ),
+      bottomNavigationBar: // bottom navigation bar
+          MyBottomNavigationBar(
+        currentIndex: 0,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/study');
+              break;
+          }
+        },
       ),
     );
   }
