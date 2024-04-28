@@ -39,8 +39,11 @@ class StudyScreen extends StatelessWidget {
           ],
         ),
       ),
+      // 플로팅 버튼 (글쓰기)
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/input_study');
+        },
         backgroundColor: primaryColor,
         icon: const Icon(
           Icons.edit,
@@ -48,9 +51,11 @@ class StudyScreen extends StatelessWidget {
         ),
         label: const Text(
           '글쓰기',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),
         ),
       ),
+      // 하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,
         onTap: (index) {

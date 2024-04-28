@@ -150,6 +150,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+      // 하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,
         onTap: (index) {
