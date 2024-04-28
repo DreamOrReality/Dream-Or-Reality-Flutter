@@ -154,9 +154,6 @@ class HomeScreen extends StatelessWidget {
         currentIndex: 0,
         onTap: (index) {
           switch (index) {
-            case 0:
-              Navigator.pushNamed(context, '/');
-              break;
             case 1:
               Navigator.pushNamed(context, '/study');
               break;

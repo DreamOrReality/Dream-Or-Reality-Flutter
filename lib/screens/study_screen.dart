@@ -44,10 +44,7 @@ class StudyScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/');
-              break;
-            case 1:
-              Navigator.pushNamed(context, '/study');
+              Navigator.pop(context, '/');
               break;
           }
         },
