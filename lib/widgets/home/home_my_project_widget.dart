@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/color.dart';
+import '../../theme/color.dart';
 
 Widget buildMyProject(
     BuildContext context, String prjName, String myRole, String period) {
