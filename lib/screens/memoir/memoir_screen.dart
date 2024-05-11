@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dream_or_reality/screens/memoir/write_memoir_screen.dart';
 import 'package:flutter_dream_or_reality/widgets/memoir_calendar_widget.dart';
 
-import '../widgets/bottom_navtion_bar_widget.dart';
+import '../../widgets/bottom_navtion_bar_widget.dart';
 
 class MemoirScreen extends StatefulWidget {
   const MemoirScreen({super.key});
@@ -36,6 +37,17 @@ class _MemoirScreenState extends State<MemoirScreen> {
             onDaySelected: onDaySelected, // 날짜 선택 시 호출될 콜백 함수 설정
           ),
         ],
+      ),
+      // 플로팅 버튼
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) =>
+                      WriteMemoirScreen(selectedDate: selectedDate)));
+        },
+        child: const Icon(Icons.add),
       ),
       // 하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(
