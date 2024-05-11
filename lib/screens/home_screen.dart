@@ -38,6 +38,25 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             buildMyProjectTitle(context, "햄지"),
+            // 내가 진행중인 프로젝트
+            Container(
+              padding:
+                  const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  border:
+                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  // TODO : for문을 이용하여 데이터베이스의 데이터를 로드할 것. (지안)
+                  children: [
+                    buildMyProject(context, "ProjectTitle", "Role", "Date"),
+                    const SizedBox(width: 10),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -151,6 +170,25 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
           style: TextStyle(
               color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
         ),
+      ],
+    ),
+  );
+}
+
+Widget buildMyProject(
+    BuildContext context, String title, String role, String date) {
+  return Container(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(title),
+            const SizedBox(width: 10),
+            Text(role),
+          ],
+        ),
+        Text(date),
       ],
     ),
   );
