@@ -29,10 +29,6 @@ class MyBottomNavigationBar extends StatelessWidget {
           label: '스터디',
         ),
         BottomNavigationBarItem(
-          icon: Image.asset('assets/img/icon/chat.png'),
-          label: '채팅',
-        ),
-        BottomNavigationBarItem(
           icon: Image.asset('assets/img/icon/notebook.png'),
           label: '회고록',
         ),
