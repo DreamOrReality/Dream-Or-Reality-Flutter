@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
@@ -21,6 +20,7 @@ class _StudyScreenState extends State<StudyScreen> {
       body: ListView(
         children: [
           //TODO: for문으로 데이터 로드
+          //클릭 이벤트는 아직 XX!
           buildPost(context, "앱잼 같이 나가실 프론트 개발자!", "리액트 다루실 줄 알면 ㄱㄱ", "해커톤"),
         ],
       ),
@@ -31,6 +31,8 @@ class _StudyScreenState extends State<StudyScreen> {
           switch (index) {
             case 0:
               Navigator.pop(context, '/');
+            case 2:
+              Navigator.pushNamed(context, '/memoir');
           }
         },
       ),

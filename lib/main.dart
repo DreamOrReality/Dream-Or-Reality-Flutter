@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dream_or_reality/screens/memoir_screen.dart';
 import 'package:flutter_dream_or_reality/screens/study_screen.dart';
 import 'package:flutter_dream_or_reality/screens/test/test_start_screen.dart';
 
@@ -19,6 +20,7 @@ class MainApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/test_start': (context) => const TestStartScreen(),
         '/study': (context) => const StudyScreen(),
+        '/memoir': (context) => const MemoirScreen()
       },
     );
   }

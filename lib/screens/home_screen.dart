@@ -68,6 +68,8 @@ class HomeScreen extends StatelessWidget {
             case 1:
               Navigator.pushNamed(context, '/study');
               break;
+            case 2:
+              Navigator.pushNamed(context, '/memoir');
           }
         },
       ),
