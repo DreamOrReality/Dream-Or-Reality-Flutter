@@ -18,6 +18,8 @@ class HomeScreen extends StatelessWidget {
           children: [
             // 상단 성향 테스트 배너 (누르면 페이지 이동 로직 구현할 것)
             buildTestBanner(context),
+            buildMyPostTitle(context, "햄지"),
+            buildMyProjectTitle(context, "햄지"),
           ],
         ),
       ),
@@ -74,6 +76,44 @@ Widget buildTestBanner(BuildContext context) {
           ),
         ],
       ),
+    ),
+  );
+}
+
+Widget buildMyPostTitle(BuildContext context, String username) {
+  return Padding(
+    padding: const EdgeInsets.all(25.0),
+    child: Row(
+      children: [
+        Text(
+          "$username님의",
+          style: const TextStyle(fontSize: 20),
+        ),
+        Text(
+          " \"게시글\"",
+          style: TextStyle(
+              color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildMyProjectTitle(BuildContext context, String username) {
+  return Padding(
+    padding: const EdgeInsets.all(25.0),
+    child: Row(
+      children: [
+        Text(
+          "$username님이 진행중인",
+          style: const TextStyle(fontSize: 20),
+        ),
+        Text(
+          " \"프로젝트\"",
+          style: TextStyle(
+              color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ],
     ),
   );
 }
