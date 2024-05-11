@@ -19,14 +19,22 @@ class HomeScreen extends StatelessWidget {
             // 상단 성향 테스트 배너 (누르면 페이지 이동 로직 구현할 것)
             buildTestBanner(context),
             buildMyPostTitle(context, "햄지"), // TODO : 로그인한 유저네임 불러올 것
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                // TODO : for문을 이용하여 데이터베이스의 데이터를 로드할 것. (지안)
-                children: [
-                  buildMyPost(context, "Post Title", "Tag", "Description", 1),
-                  const SizedBox(width: 10),
-                ],
+            // 나의 게시글
+            Container(
+              padding: const EdgeInsets.only(bottom: 25.0),
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  border:
+                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  // TODO : for문을 이용하여 데이터베이스의 데이터를 로드할 것. (지안)
+                  children: [
+                    buildMyPost(context, "Post Title", "Tag", "Description", 1),
+                    const SizedBox(width: 10),
+                  ],
+                ),
               ),
             ),
             buildMyProjectTitle(context, "햄지"),
@@ -110,7 +118,7 @@ Widget buildMyPostTitle(BuildContext context, String username) {
   );
 }
 
-// 내가 작성한 포스트 불러오기
+// 내가 작성한 포스트 컨테이너
 Widget buildMyPost(BuildContext context, String title, String tag,
     String description, int people) {
   return Container(
