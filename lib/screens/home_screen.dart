@@ -18,7 +18,8 @@ class HomeScreen extends StatelessWidget {
           children: [
             // 상단 성향 테스트 배너 (누르면 페이지 이동 로직 구현할 것)
             buildTestBanner(context),
-            buildMyPostTitle(context, "햄지"),
+            buildMyPostTitle(context, "햄지"), // TODO : 로그인한 유저네임 불러올 것
+            buildMyPost(context),
             buildMyProjectTitle(context, "햄지"),
           ],
         ),
@@ -80,6 +81,7 @@ Widget buildTestBanner(BuildContext context) {
   );
 }
 
+// ~~님의 게시글(title)
 Widget buildMyPostTitle(BuildContext context, String username) {
   return Padding(
     padding: const EdgeInsets.all(25.0),
@@ -99,6 +101,31 @@ Widget buildMyPostTitle(BuildContext context, String username) {
   );
 }
 
+Widget buildMyPost(BuildContext context) {
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(15.0),
+          decoration: BoxDecoration(border: Border.all(color: secondaryColor)),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Post Title"),
+              Text("Tag"),
+              Text("Date"),
+              Text("People")
+            ],
+          ),
+        ),
+        const SizedBox(width: 10),
+      ],
+    ),
+  );
+}
+
+// ~~님이 진행중인 프로젝트 (title)
 Widget buildMyProjectTitle(BuildContext context, String username) {
   return Padding(
     padding: const EdgeInsets.all(25.0),
