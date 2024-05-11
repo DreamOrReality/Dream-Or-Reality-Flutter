@@ -10,9 +10,8 @@ class TestStartScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 180),
             Text(
               '테스트로 알아보는',
               style: TextStyle(
@@ -29,7 +28,8 @@ class TestStartScreen extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             Image.asset('assets/img/illustration/test_start.png'),
-            //TODO: 버튼 하단 고정 / event 설정
+            const Spacer(),
+            //TODO: event 설정
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: SizedBox(
