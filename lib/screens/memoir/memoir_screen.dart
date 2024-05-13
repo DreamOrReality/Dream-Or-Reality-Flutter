@@ -29,7 +29,10 @@ class _MemoirScreenState extends State<MemoirScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('회고록')),
+      appBar: AppBar(
+        title: const Text('회고록'),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           MemoirCalendarWidget(

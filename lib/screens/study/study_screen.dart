@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
-import '../widgets/bottom_navtion_bar_widget.dart';
+import '../../widgets/bottom_navtion_bar_widget.dart';
+import 'write_mypost_screen.dart';
 
 class StudyScreen extends StatefulWidget {
   const StudyScreen({super.key});
@@ -16,6 +17,7 @@ class _StudyScreenState extends State<StudyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("미림 마이스터고"),
+        centerTitle: true,
       ),
       body: ListView(
         children: [
@@ -23,6 +25,14 @@ class _StudyScreenState extends State<StudyScreen> {
           //클릭 이벤트는 아직 XX!
           buildPost(context, "앱잼 같이 나가실 프론트 개발자!", "리액트 다루실 줄 알면 ㄱㄱ", "해커톤"),
         ],
+      ),
+      // 플로팅 버튼
+      // TODO: 플로팅 버튼 위젯으로 추출하기 (현지)
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/write_mypost');
+        },
+        child: const Icon(Icons.add),
       ),
       //하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(

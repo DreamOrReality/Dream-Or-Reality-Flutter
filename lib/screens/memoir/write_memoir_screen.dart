@@ -6,7 +6,10 @@ class WriteMemoirScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("회고록 작성")),
+      appBar: AppBar(
+        title: const Text("회고록 작성"),
+        centerTitle: true,
+      ),
       body: const SafeArea(
         child: Column(
           children: [],

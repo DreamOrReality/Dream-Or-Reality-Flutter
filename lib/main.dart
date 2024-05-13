@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/screens/memoir/memoir_screen.dart';
-import 'package:flutter_dream_or_reality/screens/study_screen.dart';
+import 'package:flutter_dream_or_reality/screens/study/study_screen.dart';
+import 'package:flutter_dream_or_reality/screens/study/write_mypost_screen.dart';
 import 'package:flutter_dream_or_reality/screens/test/test_start_screen.dart';
 
 import 'screens/home_screen.dart';
@@ -20,6 +21,7 @@ class MainApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/test_start': (context) => const TestStartScreen(),
         '/study': (context) => const StudyScreen(),
+        '/write_mypost': (context) => const WriteMyPostScreen(),
         '/memoir': (context) => const MemoirScreen(),
       },
     );
