@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WriteMemoirScreen extends StatelessWidget {
-  const WriteMemoirScreen({super.key, required DateTime selectedDate});
+  final DateTime selectedDate;
+
+  const WriteMemoirScreen({super.key, required this.selectedDate});
 
   @override
   Widget build(BuildContext context) {
@@ -10,10 +12,11 @@ class WriteMemoirScreen extends StatelessWidget {
         title: const Text("회고록 작성"),
         centerTitle: true,
       ),
-      body: const SafeArea(
-        child: Column(
-          children: [],
-        ),
+      body: Column(
+        children: [
+          Text(
+              "${selectedDate.year}년 ${selectedDate.month}월 ${selectedDate.day}일"),
+        ],
       ),
     );
   }
