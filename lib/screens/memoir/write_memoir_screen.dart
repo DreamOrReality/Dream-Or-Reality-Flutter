@@ -27,6 +27,7 @@ class WriteMemoirScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
+            // 회고록 작성
             const TextField(
               keyboardType: TextInputType.multiline,
               maxLines: null,
@@ -40,6 +41,29 @@ class WriteMemoirScreen extends StatelessWidget {
                 ),
               ),
               textAlign: TextAlign.center,
+            ),
+            const Spacer(),
+            //저장 버튼 생성
+            Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.all(20),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  padding: const EdgeInsets.all(15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  '저장하기',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+              ),
             ),
           ],
         ),
