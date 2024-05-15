@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dream_or_reality/theme/color.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MemoirCalendarWidget extends StatelessWidget {
@@ -22,6 +23,12 @@ class MemoirCalendarWidget extends StatelessWidget {
       focusedDay: DateTime.now(), //현재 날짜 포커스
       firstDay: DateTime(2022), // min
       lastDay: DateTime(2025), // max
+      calendarStyle: CalendarStyle(
+        selectedDecoration: BoxDecoration(
+          color: primaryColor, // 선택된 날짜의 배경색을 검정색으로 설정
+          shape: BoxShape.circle, // 선택된 날짜를 동그랗게 표시
+        ),
+      ),
     );
   }
 }
