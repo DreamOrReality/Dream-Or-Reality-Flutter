@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
 import '../../widgets/bottom_navtion_bar_widget.dart';
-import 'write_mypost_screen.dart';
 
 class StudyScreen extends StatefulWidget {
   const StudyScreen({super.key});
@@ -23,7 +22,7 @@ class _StudyScreenState extends State<StudyScreen> {
         children: [
           //TODO: for문으로 데이터 로드
           //클릭 이벤트는 아직 XX!
-          buildPost(context, "앱잼 같이 나가실 프론트 개발자!", "리액트 다루실 줄 알면 ㄱㄱ", "해커톤"),
+          buildPost(context, "Title", "Content", "Tag"),
         ],
       ),
       // 플로팅 버튼
