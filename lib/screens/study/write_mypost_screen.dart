@@ -38,7 +38,6 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
               const SizedBox(height: 30),
               buildInputContent(context), // 게시글 내용 입력
               const SizedBox(height: 30),
-
               //저장 버튼
               SizedBox(
                 width: MediaQuery.of(context).size.width,
@@ -69,6 +68,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
+  // 제목 / 태그 입력
   Widget buildInputTitle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +111,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
+  // 내용 입력
   Widget buildInputContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
