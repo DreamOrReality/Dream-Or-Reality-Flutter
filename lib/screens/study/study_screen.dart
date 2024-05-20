@@ -50,7 +50,6 @@ class _StudyScreenState extends State<StudyScreen> {
         },
       ),
       // 플로팅 버튼
-      // TODO: 플로팅 버튼 위젯으로 추출하기 (현지)
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, '/write_mypost');
