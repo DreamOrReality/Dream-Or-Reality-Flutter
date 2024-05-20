@@ -25,9 +25,11 @@ class MemoirCalendarWidget extends StatelessWidget {
       lastDay: DateTime(2025), // max
       calendarStyle: CalendarStyle(
         selectedDecoration: BoxDecoration(
-          color: primaryColor, // 선택된 날짜의 배경색을 검정색으로 설정
+          color: secondaryColor, // 선택된 날짜의 배경색을 검정색으로 설정
           shape: BoxShape.circle, // 선택된 날짜를 동그랗게 표시
         ),
+        todayDecoration:
+            BoxDecoration(color: primaryColor, shape: BoxShape.circle),
       ),
     );
   }
