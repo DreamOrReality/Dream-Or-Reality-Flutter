@@ -18,11 +18,16 @@ class _StudyScreenState extends State<StudyScreen> {
         title: const Text("미림 마이스터고"),
         centerTitle: true,
       ),
-      body: ListView(
-        children: List.generate(3, (index) {
-          return buildPost(
-              context, "Title $index", "Content $index", "Tag $index");
-        }),
+      // 리스트
+      body: ListView.builder(
+        itemCount: 10, // 게시글 튜플 카운트
+        itemBuilder: (BuildContext context, int index) {
+          // 여기서 각 항목에 대한 정보를 제공할 수 있도록 수정 (지안)
+          final title = 'Title $index';
+          final description = 'Description $index';
+          final tag = 'Tag $index';
+          return buildPost(context, title, description, tag);
+        },
       ),
       // 플로팅 버튼
       // TODO: 플로팅 버튼 위젯으로 추출하기 (현지)
