@@ -1,3 +1,5 @@
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 
 import '../../theme/color.dart';
@@ -11,9 +13,25 @@ class WriteMemoirScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     late String memoirContent;
 
-    void saveMemoirToDatabase(String text) {
-      //TODO: 데이터 베이스에 값을 저장하는 로직 구현하기
-      print(memoirContent);
+    // 왜 널값이 들어가 ㅠㅠㅠㅠㅠㅠㅠ
+    Future<void> saveMemoirToDatabase(String text) async {
+      if (text.isNotEmpty) {
+        try {
+          final url = Uri.parse('http://localhost:3000/memoirs');
+          final response = await http.post(url,
+              body: {'date': selectedDate.toString(), 'content': text});
+
+          if (response.statusCode == 200) {
+            print('Memoir saved successfully!');
+          } else {
+            throw Exception('Failed to save memoir!');
+          }
+        } catch (error) {
+          print('Error saving memoir: $error');
+        }
+      } else {
+        print('Memoir content is empty!!');
+      }
     }
 
     return Scaffold(
