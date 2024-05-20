@@ -19,11 +19,10 @@ class _StudyScreenState extends State<StudyScreen> {
         centerTitle: true,
       ),
       body: ListView(
-        children: [
-          //TODO: for문으로 데이터 로드
-          //클릭 이벤트는 아직 XX!
-          buildPost(context, "Title", "Content", "Tag"),
-        ],
+        children: List.generate(3, (index) {
+          return buildPost(
+              context, "Title $index", "Content $index", "Tag $index");
+        }),
       ),
       // 플로팅 버튼
       // TODO: 플로팅 버튼 위젯으로 추출하기 (현지)
@@ -50,7 +49,6 @@ class _StudyScreenState extends State<StudyScreen> {
 }
 
 // 사용자들의 작성글 컨테이너
-// TODO: tag를 list로 만들것
 Widget buildPost(
     BuildContext context, String title, String description, String tag) {
   return Container(
