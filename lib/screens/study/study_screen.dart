@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
@@ -11,6 +14,26 @@ class StudyScreen extends StatefulWidget {
 }
 
 class _StudyScreenState extends State<StudyScreen> {
+  List<dynamic> posts = []; // 게시글을 저장할 리스트
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPosts();
+  }
+
+  Future<void> fetchPosts() async {
+    final response = await http.get(Uri.parse('http://localhost:3000/posts'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        posts = json.decode(response.body);
+      });
+    } else {
+      throw Exception('Failed to load posts');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +43,10 @@ class _StudyScreenState extends State<StudyScreen> {
       ),
       // 리스트
       body: ListView.builder(
-        itemCount: 10, // 게시글 튜플 카운트
+        itemCount: posts.length, // 게시글 튜플 카운트
         itemBuilder: (BuildContext context, int index) {
-          // 여기서 각 항목에 대한 정보를 제공할 수 있도록 수정 (지안)
-          final title = 'Title $index';
-          final description = 'Description $index';
-          final tag = 'Tag $index';
-          return buildPost(context, title, description, tag);
+          final post = posts[index];
+          return buildPost(context, post['title'], post['content']);
         },
       ),
       // 플로팅 버튼
@@ -54,8 +74,7 @@ class _StudyScreenState extends State<StudyScreen> {
 }
 
 // 사용자들의 작성글 컨테이너
-Widget buildPost(
-    BuildContext context, String title, String description, String tag) {
+Widget buildPost(BuildContext context, String title, String content) {
   return Container(
     decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
@@ -64,8 +83,7 @@ Widget buildPost(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title),
-        Text(description),
-        Text(tag),
+        Text(content),
       ],
     ),
   );
