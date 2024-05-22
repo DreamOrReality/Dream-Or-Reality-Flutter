@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dream_or_reality/screens/auth/login_screen.dart';
 import 'package:flutter_dream_or_reality/screens/memoir/memoir_screen.dart';
 import 'package:flutter_dream_or_reality/screens/study/study_screen.dart';
 import 'package:flutter_dream_or_reality/screens/study/write_mypost_screen.dart';
@@ -16,13 +17,14 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => const HomeScreen(),
         '/test_start': (context) => const TestStartScreen(),
         '/study': (context) => const StudyScreen(),
         '/write_mypost': (context) => const WriteMyPostScreen(),
         '/memoir': (context) => const MemoirScreen(),
+        '/login': (context) => const LoginScreen(),
       },
     );
   }
