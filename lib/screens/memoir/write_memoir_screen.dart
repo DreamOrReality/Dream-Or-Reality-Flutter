@@ -26,6 +26,8 @@ class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
     super.dispose();
   }
 
+  // 데이터베이스에 회고록 저장하는 로직
+  // 데이터베이스에 맞게 수정하여 이용하세요! (지안)
   Future<void> saveMemoirToDatabase(String text) async {
     if (text.isNotEmpty) {
       try {
