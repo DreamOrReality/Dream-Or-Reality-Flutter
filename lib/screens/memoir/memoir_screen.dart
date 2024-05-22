@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/screens/memoir/write_memoir_screen.dart';
+import 'package:flutter_dream_or_reality/theme/color.dart';
 import 'package:flutter_dream_or_reality/widgets/memoir_calendar_widget.dart';
 
 import '../../widgets/bottom_navtion_bar_widget.dart';
@@ -42,7 +43,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
         ],
       ),
       // 플로팅 버튼
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
               context,
@@ -50,7 +51,16 @@ class _MemoirScreenState extends State<MemoirScreen> {
                   builder: (_) =>
                       WriteMemoirScreen(selectedDate: selectedDate)));
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        label: const Text(
+          '글쓰기',
+          style: TextStyle(
+              fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: primaryColor,
       ),
       // 하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(
