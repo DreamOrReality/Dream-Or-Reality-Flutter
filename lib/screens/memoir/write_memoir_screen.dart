@@ -1,39 +1,53 @@
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-
 import '../../theme/color.dart';
 
-class WriteMemoirScreen extends StatelessWidget {
+class WriteMemoirScreen extends StatefulWidget {
   final DateTime selectedDate;
 
   const WriteMemoirScreen({super.key, required this.selectedDate});
 
   @override
-  Widget build(BuildContext context) {
-    late String memoirContent;
+  _WriteMemoirScreenState createState() => _WriteMemoirScreenState();
+}
 
-    // 왜 널값이 들어가 ㅠㅠㅠㅠㅠㅠㅠ
-    Future<void> saveMemoirToDatabase(String text) async {
-      if (text.isNotEmpty) {
-        try {
-          final url = Uri.parse('http://localhost:3000/memoirs');
-          final response = await http.post(url,
-              body: {'date': selectedDate.toString(), 'content': text});
+class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
+  late TextEditingController _memoirController; // 회고록 컨트롤러
 
-          if (response.statusCode == 200) {
-            print('Memoir saved successfully!');
-          } else {
-            throw Exception('Failed to save memoir!');
-          }
-        } catch (error) {
-          print('Error saving memoir: $error');
+  @override
+  void initState() {
+    super.initState();
+    _memoirController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _memoirController.dispose();
+    super.dispose();
+  }
+
+  Future<void> saveMemoirToDatabase(String text) async {
+    if (text.isNotEmpty) {
+      try {
+        final url = Uri.parse('http://localhost:3000/memoirs');
+        final response = await http.post(url,
+            body: {'day': widget.selectedDate.toString(), 'content': text});
+
+        if (response.statusCode == 200) {
+          print('Memoir saved successfully!');
+        } else {
+          throw Exception('Failed to save memoir!');
         }
-      } else {
-        print('Memoir content is empty!!');
+      } catch (error) {
+        print('Error saving memoir: $error');
       }
+    } else {
+      print('Memoir content is empty!!');
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("회고록 작성"),
@@ -45,7 +59,7 @@ class WriteMemoirScreen extends StatelessWidget {
             const SizedBox(height: 80),
             // 선택된 날짜를 불러옴
             Text(
-              "${selectedDate.year}년 ${selectedDate.month}월 ${selectedDate.day}일",
+              "${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일",
               style: const TextStyle(
                 fontSize: 20,
                 color: Color(0xFFB3B3B3),
@@ -54,6 +68,7 @@ class WriteMemoirScreen extends StatelessWidget {
             const SizedBox(height: 40),
             // 회고록 작성
             TextField(
+              controller: _memoirController, // 컨트롤러
               keyboardType: TextInputType.multiline,
               maxLines: null,
               style: const TextStyle(fontSize: 18),
@@ -66,19 +81,15 @@ class WriteMemoirScreen extends StatelessWidget {
                 ),
               ),
               textAlign: TextAlign.center,
-              onChanged: (value) {
-                // 텍스트가 변경될 때마다 memoirText 변수에 저장
-                memoirContent = value;
-              },
             ),
             const Spacer(),
-            //저장 버튼
+            // 저장 버튼
             Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.all(20),
               child: ElevatedButton(
                 onPressed: () {
-                  saveMemoirToDatabase(memoirContent);
+                  saveMemoirToDatabase(_memoirController.text);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
@@ -90,9 +101,10 @@ class WriteMemoirScreen extends StatelessWidget {
                 child: const Text(
                   '저장하기',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),
