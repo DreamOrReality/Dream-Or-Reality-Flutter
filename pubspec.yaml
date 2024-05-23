@@ -29,3 +29,4 @@ flutter:
     - assets/img/icon/notebook.png
     - assets/img/icon/user.png
     - assets/img/illustration/test_start.png
+    - assets/json/data.json
