@@ -1,3 +1,4 @@
+import 'package:flutter_dream_or_reality/screens/memoir/memoir_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../../theme/color.dart';
@@ -37,6 +38,8 @@ class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
 
         if (response.statusCode == 200) {
           print('Memoir saved successfully!');
+          // 다시 회고록으로 돌아가기
+          Navigator.pop(context, "/memoir");
         } else {
           throw Exception('Failed to save memoir!');
         }

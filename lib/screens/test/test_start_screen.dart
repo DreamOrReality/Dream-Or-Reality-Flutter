@@ -29,7 +29,6 @@ class TestStartScreen extends StatelessWidget {
             const SizedBox(height: 50),
             Image.asset('assets/img/illustration/test_start.png'),
             const Spacer(),
-            //TODO: event 설정
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: SizedBox(
