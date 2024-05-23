@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,11 +13,52 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _userIdController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
-    // Node.js 서버로 요청을 보내는 로직 작성
+  Future<void> _login() async {
+    final String id = _userIdController.text;
+    final String pw = _passwordController.text;
 
-    // 로그인 성공 시, '/' 경로로 이동
-    Navigator.pushNamed(context, '/');
+    final response = await http.post(
+      Uri.parse('http://localhost:3000/user/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id,
+        'pw': pw,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
+      final userId = responseBody['userid'];
+      print('Logged in user ID: $userId');
+
+      // 로그인 성공 시, '/' 경로로 이동
+      Navigator.pushNamed(context, '/');
+    } else {
+      final responseBody = jsonDecode(response.body);
+      final error = responseBody['error'];
+      print('Login error: $error');
+
+      // 로그인 실패 시 알림
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Failed'),
+            content: Text(error),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
