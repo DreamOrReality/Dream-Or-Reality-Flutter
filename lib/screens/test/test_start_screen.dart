@@ -48,7 +48,12 @@ class TestStartScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/select',
+                    );
+                  },
                   child: const Text('테스트 시작하기'),
                 ),
               ),
