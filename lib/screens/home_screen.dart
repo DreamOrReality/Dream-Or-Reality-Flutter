@@ -1,10 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
 import '../widgets/bottom_navtion_bar_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int? _userId;
+  String? _userName;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getInt('userId');
+      final userName = prefs.getString('userName');
+      setState(() {
+        _userId = userId;
+        _userName = userName;
+      });
+      print('Stored user ID: $userId');
+      print('Stored user name: $userName');
+    } catch (e, stacktrace) {
+      print('Error loading user data: $e');
+      print('Stacktrace: $stacktrace');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +50,14 @@ class HomeScreen extends StatelessWidget {
           children: [
             // 상단 성향 테스트 배너 (누르면 페이지 이동 로직 구현할 것)
             buildTestBanner(context),
-            buildMyPostTitle(context, "햄지"), // TODO : 로그인한 유저네임 불러올 것
+            buildMyPostTitle(context, _userName ?? 'Unknown'), // 로그인한 유저네임 불러오기
             // 나의 게시글
             Container(
               padding: const EdgeInsets.only(bottom: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   border:
-                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -37,15 +69,15 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            buildMyProjectTitle(context, "햄지"),
+            buildMyProjectTitle(context, _userName ?? 'Unknown'),
             // 내가 진행중인 프로젝트
             Container(
               padding:
-                  const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
+              const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   border:
-                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Column(
