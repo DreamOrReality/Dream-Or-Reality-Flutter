@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_dream_or_reality/screens/memoir/memoir_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Add this import for SharedPreferences
 import '../../theme/color.dart';
 
 class WriteMemoirScreen extends StatefulWidget {
@@ -28,13 +31,34 @@ class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
   }
 
   // 데이터베이스에 회고록 저장하는 로직
-  // 데이터베이스에 맞게 수정하여 이용하세요! (지안)
   Future<void> saveMemoirToDatabase(String text) async {
     if (text.isNotEmpty) {
       try {
-        final url = Uri.parse('http://localhost:3000/memoirs');
-        final response = await http.post(url,
-            body: {'day': widget.selectedDate.toString(), 'content': text});
+        // Load the stored userId from SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        final userId = prefs.getInt('userId');
+
+        if (userId == null) {
+          print('Error: User ID is null');
+          return;
+        }
+
+        print('Stored user ID: $userId'); // 콘솔에 userId 출력
+
+        // DateTime을 MySQL의 DATE 형식으로 변환
+        final formattedDate = "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
+
+        final response = await http.post(
+          Uri.parse('http://localhost:3000/user/saveMemoir'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{
+            'UserId': userId,
+            'date': formattedDate,
+            'content': text
+          }),
+        );
 
         if (response.statusCode == 200) {
           print('Memoir saved successfully!');
