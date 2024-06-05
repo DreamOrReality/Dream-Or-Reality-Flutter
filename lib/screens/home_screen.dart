@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
@@ -14,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int? _userId;
   String? _userName;
+  List<dynamic> _projects = [];
 
   @override
   void initState() {
@@ -32,10 +37,47 @@ class _HomeScreenState extends State<HomeScreen> {
       });
       print('Stored user ID: $userId');
       print('Stored user name: $userName');
+      if (userId != null) {
+        await _getProjects(userId);
+      }
     } catch (e, stacktrace) {
       print('Error loading user data: $e');
       print('Stacktrace: $stacktrace');
     }
+  }
+
+  Future<void> _getProjects(int userId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3000/user/getProjects'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, int>{
+          'UserId': userId,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+        setState(() {
+          _projects = responseBody;
+        });
+      } else {
+        final responseBody = jsonDecode(response.body);
+        final error = responseBody['error'];
+        print('Error fetching projects: $error');
+      }
+    } catch (e, stacktrace) {
+      print('Error fetching projects: $e');
+      print('Stacktrace: $stacktrace');
+    }
+  }
+
+  String formatDate(String date) {
+    final DateTime parsedDate = DateTime.parse(date);
+    final DateFormat formatter = DateFormat('yyyy년 MM월 dd일');
+    return formatter.format(parsedDate);
   }
 
   @override
@@ -56,8 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(bottom: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border:
-                  Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -72,20 +113,20 @@ class _HomeScreenState extends State<HomeScreen> {
             buildMyProjectTitle(context, _userName ?? 'Unknown'),
             // 내가 진행중인 프로젝트
             Container(
-              padding:
-              const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
+              padding: const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border:
-                  Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Column(
-                  // TODO : for문을 이용하여 데이터베이스의 데이터를 로드할 것. (지안)
-                  children: [
-                    buildMyProject(context, "ProjectTitle", "Role", "Date"),
-                    const SizedBox(width: 10),
-                  ],
+                  children: _projects.map((project) {
+                    return buildMyProject(
+                      context,
+                      project['title'],
+                      formatDate(project['createdAt']),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
@@ -211,7 +252,7 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
 
 // 진행중인 프로젝트 컨테이너
 Widget buildMyProject(
-    BuildContext context, String title, String role, String date) {
+    BuildContext context, String title, String date) {
   return Container(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +261,6 @@ Widget buildMyProject(
           children: [
             Text(title),
             const SizedBox(width: 10),
-            Text(role),
           ],
         ),
         Text(date),
