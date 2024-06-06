@@ -98,11 +98,12 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(bottom: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border:
+                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  // TODO : for문을 이용하여 데이터베이스의 데이터를 로드할 것. (지안)
+                  // 나의 게시글을 불러옴
                   children: [
                     buildMyPost(context, "Post Title", "Tag", "Description", 1),
                     const SizedBox(width: 10),
@@ -113,14 +114,17 @@ class _HomeScreenState extends State<HomeScreen> {
             buildMyProjectTitle(context, _userName ?? 'Unknown'),
             // 내가 진행중인 프로젝트
             Container(
-              padding: const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
+              padding:
+                  const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border:
+                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Column(
                   children: _projects.map((project) {
+                    // 내가 진행중인 프로젝트를 불러옴
                     return buildMyProject(
                       context,
                       project['title'],
@@ -251,19 +255,23 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
 }
 
 // 진행중인 프로젝트 컨테이너
-Widget buildMyProject(
-    BuildContext context, String title, String date) {
+Widget buildMyProject(BuildContext context, String title, String date) {
   return Container(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    padding: EdgeInsets.all(18),
+    color: primaryColor,
+    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            Text(title),
-            const SizedBox(width: 10),
-          ],
+        Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        Text(date),
+        Text(
+          date,
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
       ],
     ),
   );
