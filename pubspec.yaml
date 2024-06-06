@@ -8,13 +8,13 @@ environment:
 
 dependencies:
   bottom_navigation_bar: ^1.0.1
-  fl_chart: ^0.67.0
+  fl_chart: ^0.68.0
   flutter:
     sdk: flutter
   http: ^1.2.1
   table_calendar: ^3.1.1
   shared_preferences: ^2.0.13
-  intl : ^0.17.0
+  intl: ^0.19.0
 
 flutter:
   uses-material-design: true
@@ -27,3 +27,7 @@ flutter:
     - assets/img/icon/user.png
     - assets/img/illustration/test_start.png
     - assets/json/data.json
+  fonts:
+    - family: PartialSansKR
+      fonts:
+        - asset: assets/fonts/PartialSansKR-Regular.otf

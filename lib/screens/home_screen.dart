@@ -184,14 +184,14 @@ Widget buildTestBanner(BuildContext context) {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: 'PartialSansKR',
                 ),
               ),
               Text(
                 '👉 지금 테스트 하러가기!',
                 style: TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: 'PartialSansKR',
                 ),
               ),
             ],
