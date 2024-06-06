@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadUserData();
   }
 
+  // 유저 데이터
   Future<void> _loadUserData() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  //프로젝트 정보 가져오기
   Future<void> _getProjects(int userId) async {
     try {
       final response = await http.post(
@@ -74,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  //날짜 데이터의 형태를 포맷해주는 메서드
   String formatDate(String date) {
     final DateTime parsedDate = DateTime.parse(date);
     final DateFormat formatter = DateFormat('yyyy년 MM월 dd일');
@@ -94,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             buildTestBanner(context),
             buildMyPostTitle(context, _userName ?? 'Unknown'), // 로그인한 유저네임 불러오기
             // 나의 게시글
+            // 지안 여기 Description이라고 되어있는거 모집 기한? 그 날짜로 바꿔주라
             Container(
               padding: const EdgeInsets.only(bottom: 25.0),
               width: MediaQuery.of(context).size.width,
@@ -105,8 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   // 나의 게시글을 불러옴
                   children: [
-                    buildMyPost(context, "Post Title", "Tag", "Description", 1),
-                    const SizedBox(width: 10),
+                    buildMyPost(context, "스택 프론트엔드 개발자 구해요~", "Description", 1),
+                    SizedBox(width: 10),
+                    buildMyPost(context, "앱잼 같이 참여하실 분!", "Description", 1),
+                    SizedBox(width: 10),
+                    buildMyPost(context, "미림 소프트웨어 챌린지", "Description", 1),
+                    SizedBox(width: 10),
+                    buildMyPost(context, "미림 소프트웨어 챌린지", "Description", 1),
+                    SizedBox(width: 10),
                   ],
                 ),
               ),
@@ -217,18 +227,53 @@ Widget buildMyPostTitle(BuildContext context, String username) {
 }
 
 // 내가 작성한 포스트 컨테이너
-Widget buildMyPost(BuildContext context, String title, String tag,
-    String description, int people) {
+Widget buildMyPost(
+    BuildContext context, String title, String description, int people) {
   return Container(
     padding: const EdgeInsets.all(15.0),
-    decoration: BoxDecoration(border: Border.all(color: secondaryColor)),
+    decoration: BoxDecoration(
+      border: Border.all(color: secondaryColor),
+      borderRadius: BorderRadius.circular(10),
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title),
-        Text(tag),
-        Text(description),
-        Text(people.toString())
+        Text(
+          title.length > 10 ? '${title.substring(0, 10)}...' : title,
+          style: TextStyle(fontSize: 15),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+        SizedBox(height: 10),
+        Text(
+          "기간",
+          style: TextStyle(fontSize: 13, color: secondTextColor),
+        ),
+        SizedBox(height: 5),
+        Text(
+          description,
+          style: TextStyle(fontSize: 13),
+        ), // 모집 마감일로 바꿔주세요!!
+        SizedBox(height: 10),
+        Text(
+          "모집인원",
+          style: TextStyle(fontSize: 13, color: secondTextColor),
+        ),
+        SizedBox(height: 5),
+        Row(
+          children: [
+            Icon(
+              Icons.person,
+              size: 20,
+              color: primaryColor,
+            ),
+            SizedBox(width: 10),
+            Text(
+              people.toString(),
+              style: TextStyle(fontSize: 13, color: primaryColor),
+            )
+          ],
+        ),
       ],
     ),
   );
@@ -266,11 +311,11 @@ Widget buildMyProject(BuildContext context, String title, String date) {
         Text(
           title,
           style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
         ),
         Text(
           date,
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.white, fontSize: 15),
         ),
       ],
     ),
