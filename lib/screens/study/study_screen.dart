@@ -50,11 +50,20 @@ class _StudyScreenState extends State<StudyScreen> {
         },
       ),
       // 플로팅 버튼
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushNamed(context, '/write_mypost');
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        label: const Text(
+          '글쓰기',
+          style: TextStyle(
+              fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: primaryColor,
       ),
       //하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(
