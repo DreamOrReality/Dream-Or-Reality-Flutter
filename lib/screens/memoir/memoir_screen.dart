@@ -73,9 +73,32 @@ class _MemoirScreenState extends State<MemoirScreen> {
             case 1:
               Navigator.pushNamed(context, '/study');
               break;
+            case 3:
+              showMyPageAlert(context);
+              break;
           }
         },
       ),
+    );
+  }
+
+  void showMyPageAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('알림'),
+          content: Text('원활한 전시를 위해 마이페이지 탭에는 접속하실 수 없습니다!'),
+          actions: [
+            TextButton(
+              child: Text('확인'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
