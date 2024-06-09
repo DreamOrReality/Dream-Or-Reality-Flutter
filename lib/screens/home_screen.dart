@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
         setState(() {
-          _projects = responseBody;
+          _projects = responseBody is List ? responseBody : [];
         });
       } else {
         final responseBody = jsonDecode(response.body);
@@ -102,20 +102,19 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(bottom: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border:
-                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   // 나의 게시글을 불러옴
                   children: [
-                    buildMyPost(context, "스택 프론트엔드 개발자 구해요~", "Description", 1),
+                    buildMyPost(context, "스택 프론트엔드 개발자 구해요~", "2024-07-01", 1),
                     SizedBox(width: 10),
-                    buildMyPost(context, "앱잼 같이 참여하실 분!", "Description", 1),
+                    buildMyPost(context, "앱잼 같이 참여하실 분!", "2024-08-15", 1),
                     SizedBox(width: 10),
-                    buildMyPost(context, "미림 소프트웨어 챌린지", "Description", 1),
+                    buildMyPost(context, "미림 소프트웨어 챌린지", "2024-09-01", 1),
                     SizedBox(width: 10),
-                    buildMyPost(context, "미림 소프트웨어 챌린지", "Description", 1),
+                    buildMyPost(context, "미림 소프트웨어 챌린지", "2024-09-01", 1),
                     SizedBox(width: 10),
                   ],
                 ),
@@ -124,15 +123,13 @@ class _HomeScreenState extends State<HomeScreen> {
             buildMyProjectTitle(context, _userName ?? 'Unknown'),
             // 내가 진행중인 프로젝트
             Container(
-              padding:
-                  const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
+              padding: const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border:
-                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: _projects.map((project) {
                     // 내가 진행중인 프로젝트를 불러옴
                     return buildMyProject(
@@ -196,11 +193,13 @@ Widget buildTestBanner(BuildContext context) {
     },
     child: Container(
       padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-      color: primaryColor,
+      decoration: BoxDecoration(
+        color: primaryColor,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -327,21 +326,26 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
 Widget buildMyProject(BuildContext context, String title, String date) {
   return Container(
     padding: EdgeInsets.all(18),
-    color: primaryColor,
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-    child: Row(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(15),
+      border: Border.all(color: primaryColor, width: 1),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
           style: TextStyle(
-              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+              fontSize: 15, fontWeight: FontWeight.bold),
         ),
+        SizedBox(height: 10),
         Text(
           date,
-          style: TextStyle(color: Colors.white, fontSize: 15),
+          style: TextStyle( fontSize: 15),
         ),
       ],
     ),
   );
 }
+
