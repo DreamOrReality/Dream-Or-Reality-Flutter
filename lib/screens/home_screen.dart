@@ -102,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(bottom: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border:
+                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -123,10 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
             buildMyProjectTitle(context, _userName ?? 'Unknown'),
             // 내가 진행중인 프로젝트
             Container(
-              padding: const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
+              padding:
+                  const EdgeInsets.only(bottom: 25.0, left: 25.0, right: 25.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: strokeColor, width: 2))),
+                  border:
+                      Border(bottom: BorderSide(color: strokeColor, width: 2))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,14 +202,14 @@ Widget buildTestBanner(BuildContext context) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Row(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 '나는 어떤 성향의\n개발자/디자이너 일까?',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 15,
                   fontFamily: 'PartialSansKR',
                 ),
               ),
@@ -215,13 +218,14 @@ Widget buildTestBanner(BuildContext context) {
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'PartialSansKR',
+                  fontSize: 12,
                 ),
               ),
             ],
           ),
           Image.asset(
             'assets/img/illustration/developer.png',
-            width: 150,
+            width: 115,
           ),
         ],
       ),
@@ -336,16 +340,14 @@ Widget buildMyProject(BuildContext context, String title, String date) {
       children: [
         Text(
           title,
-          style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
         Text(
           date,
-          style: TextStyle( fontSize: 15),
+          style: TextStyle(fontSize: 15),
         ),
       ],
     ),
   );
 }
-
