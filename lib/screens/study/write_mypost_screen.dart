@@ -75,7 +75,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(23),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -85,7 +85,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                        fontSize: 15),
                   ),
                 ),
               ),
@@ -101,15 +101,15 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('게시글 제목', style: TextStyle(fontSize: 20)),
+        const Text('게시글 제목', style: TextStyle(fontSize: 18)),
         TextField(
           keyboardType: TextInputType.multiline,
           maxLines: null,
-          style: const TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 15),
           decoration: const InputDecoration(
             hintText: '게시글 제목을 입력해주세요.',
             hintStyle: TextStyle(
-              fontSize: 18,
+              fontSize: 15,
             ),
           ),
           onChanged: (value) {
@@ -127,18 +127,18 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('태그', style: TextStyle(fontSize: 20)),
+        const Text('태그', style: TextStyle(fontSize: 18)),
         DropdownButtonFormField<String>(
           decoration: const InputDecoration(
             hintText: '#태그',
             hintStyle: TextStyle(
-              fontSize: 18,
+              fontSize: 15,
             ),
           ),
           items: tags.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value, style: const TextStyle(fontSize: 18)),
+              child: Text(value, style: const TextStyle(fontSize: 15)),
             );
           }).toList(),
           onChanged: (value) {
@@ -156,15 +156,15 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('게시글 내용', style: TextStyle(fontSize: 20)),
+        const Text('게시글 내용', style: TextStyle(fontSize: 18)),
         TextField(
           keyboardType: TextInputType.multiline,
           maxLines: null,
-          style: const TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 15),
           decoration: const InputDecoration(
             hintText: '게시글 내용을 입력해주세요.',
             hintStyle: TextStyle(
-              fontSize: 18,
+              fontSize: 15,
             ),
           ),
           onChanged: (value) {
@@ -182,19 +182,25 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('모집 인원', style: TextStyle(fontSize: 20)),
-        TextField(
-          keyboardType: TextInputType.number,
-          style: const TextStyle(fontSize: 18),
+        const Text('모집 인원', style: TextStyle(fontSize: 18)),
+        DropdownButtonFormField<int>(
           decoration: const InputDecoration(
-            hintText: '모집 인원을 입력해주세요.',
+            hintText: '모집 인원을 선택해주세요.',
             hintStyle: TextStyle(
-              fontSize: 18,
+              fontSize: 15,
+            ),
+          ),
+          items: List<DropdownMenuItem<int>>.generate(
+            7,
+            (int index) => DropdownMenuItem<int>(
+              value: index,
+              child:
+                  Text(index.toString(), style: const TextStyle(fontSize: 15)),
             ),
           ),
           onChanged: (value) {
             setState(() {
-              recuritCount = int.parse(value);
+              recuritCount = value!;
             });
           },
         ),
@@ -207,14 +213,14 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('마감일', style: TextStyle(fontSize: 20)),
+        const Text('마감일', style: TextStyle(fontSize: 18)),
         GestureDetector(
           onTap: () async {
             final DateTime? pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
+              firstDate: DateTime(2024),
+              lastDate: DateTime(2050),
             );
             if (pickedDate != null) {
               setState(() {
@@ -232,10 +238,10 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
               decoration: const InputDecoration(
                 hintText: '마감일을 선택해주세요.',
                 hintStyle: TextStyle(
-                  fontSize: 18,
+                  fontSize: 15,
                 ),
               ),
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 15),
             ),
           ),
         ),
