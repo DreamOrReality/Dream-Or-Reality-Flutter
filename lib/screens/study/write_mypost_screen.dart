@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../theme/color.dart';
 
@@ -13,11 +14,26 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
   late String postTitle;
   late String postTag;
   late String postContent;
+  late int recuritCount;
+  DateTime? deadline;
 
-  void savePostToDatabase(String title, String tag, String content) {
-    print(title);
-    print(tag);
-    print(content);
+  final List<String> tags = [
+    "백엔드 개발자",
+    "프론트엔드 개발자",
+    "모바일 앱 개발자",
+    "UI/UX 디자이너",
+    "3D 디자이너",
+    "영상디자이너"
+  ];
+
+  void savePostToDatabase(String title, String tag, String content, int recurit,
+      DateTime deadline) {
+    // Save to database
+    print("Title: $title");
+    print("Tag: $tag");
+    print("Content: $content");
+    print("Recurit: $recurit");
+    print("Deadline: ${DateFormat('yyyy-MM-dd').format(deadline)}");
   }
 
   @override
@@ -35,15 +51,27 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             children: [
               const SizedBox(height: 20),
               buildInputTitle(context), // 제목 / 태그 입력
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
+              buildDropdownTag(context), // 태그 드롭다운
+              const SizedBox(height: 20),
               buildInputContent(context), // 게시글 내용 입력
+              const SizedBox(height: 20),
+              buildRecuritInput(context), // 모집 인원 입력
+              const SizedBox(height: 20),
+              buildDeadlineInput(context), // 마감일 입력
               const SizedBox(height: 30),
               //저장 버튼
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                   onPressed: () {
-                    savePostToDatabase(postTitle, postTag, postContent);
+                    if (deadline != null) {
+                      savePostToDatabase(postTitle, postTag, postContent,
+                          recuritCount, deadline!);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("마감일을 선택해주세요.")));
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,
@@ -68,7 +96,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
-  // 제목 / 태그 입력
+  // 제목 입력
   Widget buildInputTitle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,20 +118,32 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             });
           },
         ),
-        const SizedBox(height: 10),
-        TextField(
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          style: const TextStyle(fontSize: 18),
+      ],
+    );
+  }
+
+  // 태그 드롭다운
+  Widget buildDropdownTag(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('태그', style: TextStyle(fontSize: 20)),
+        DropdownButtonFormField<String>(
           decoration: const InputDecoration(
             hintText: '#태그',
             hintStyle: TextStyle(
               fontSize: 18,
             ),
           ),
+          items: tags.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value, style: const TextStyle(fontSize: 18)),
+            );
+          }).toList(),
           onChanged: (value) {
             setState(() {
-              postTag = value;
+              postTag = value!;
             });
           },
         ),
@@ -132,6 +172,72 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
               postContent = value;
             });
           },
+        ),
+      ],
+    );
+  }
+
+  // 모집 인원 입력
+  Widget buildRecuritInput(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('모집 인원', style: TextStyle(fontSize: 20)),
+        TextField(
+          keyboardType: TextInputType.number,
+          style: const TextStyle(fontSize: 18),
+          decoration: const InputDecoration(
+            hintText: '모집 인원을 입력해주세요.',
+            hintStyle: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          onChanged: (value) {
+            setState(() {
+              recuritCount = int.parse(value);
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  // 마감일 입력
+  Widget buildDeadlineInput(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('마감일', style: TextStyle(fontSize: 20)),
+        GestureDetector(
+          onTap: () async {
+            final DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
+            );
+            if (pickedDate != null) {
+              setState(() {
+                deadline = pickedDate;
+              });
+            }
+          },
+          child: AbsorbPointer(
+            child: TextField(
+              controller: TextEditingController(
+                text: deadline != null
+                    ? DateFormat('yyyy-MM-dd').format(deadline!)
+                    : '',
+              ),
+              decoration: const InputDecoration(
+                hintText: '마감일을 선택해주세요.',
+                hintStyle: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              style: const TextStyle(fontSize: 18),
+            ),
+          ),
         ),
       ],
     );
