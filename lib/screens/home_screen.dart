@@ -133,14 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _projects.map((project) {
-                    // 내가 진행중인 프로젝트를 불러옴
-                    return buildMyProject(
-                      context,
-                      project['title'],
-                      formatDate(project['createdAt']),
-                    );
-                  }).toList(),
+                  children: _projects.map(
+                    (project) {
+                      // 내가 진행중인 프로젝트를 불러옴
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 10.0), // Added padding here
+                        child: buildMyProject(
+                          context,
+                          project['title'],
+                          formatDate(project['createdAt']),
+                        ),
+                      );
+                    },
+                  ).toList(),
                 ),
               ),
             ),
@@ -334,18 +340,17 @@ Widget buildMyProject(BuildContext context, String title, String date) {
       borderRadius: BorderRadius.circular(15),
       border: Border.all(color: primaryColor, width: 1),
     ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        //SizedBox(height: 5),
         Text(
           date,
-          style: TextStyle(fontSize: 15),
+          style: TextStyle(fontSize: 12),
         ),
       ],
     ),
