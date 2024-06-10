@@ -46,7 +46,8 @@ class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
         print('Stored user ID: $userId'); // 콘솔에 userId 출력
 
         // DateTime을 MySQL의 DATE 형식으로 변환
-        final formattedDate = "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
+        final formattedDate =
+            "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
 
         final response = await http.post(
           Uri.parse('http://54.180.227.4:3000/user/saveMemoir'),
@@ -122,7 +123,7 @@ class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(23),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -132,7 +133,7 @@ class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 15,
                   ),
                 ),
               ),
