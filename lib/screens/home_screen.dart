@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getProjects(int userId) async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:3000/user/getProjects'),
+        Uri.parse('http://54.180.227.4:3000/user/getProjects'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
