@@ -36,36 +36,12 @@ class _ShowMemoirScreenState extends State<ShowMemoirScreen> {
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(horizontal: 50),
-                hintText: '오늘 하루를 기록해보세요.',
+                hintText: '오늘은 차암 힘들었다.\nㄹㅇ 너무 힘들엇지만 버텼다 ^^',
                 hintStyle: TextStyle(
                   fontSize: 18,
                 ),
               ),
               textAlign: TextAlign.center,
-            ),
-            const Spacer(),
-            // 저장 버튼
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.all(20),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryColor,
-                  padding: const EdgeInsets.all(23),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  '저장하기',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
             ),
           ],
         ),
