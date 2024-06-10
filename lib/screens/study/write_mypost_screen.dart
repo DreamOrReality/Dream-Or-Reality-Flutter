@@ -204,7 +204,8 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
           maxLines: 5,
           style: const TextStyle(fontSize: 15),
           decoration: InputDecoration(
-            hintText: '게시글 내용을 입력해주세요.',
+            hintText:
+                '아래 내용을 포함하여 주세요.\nex) 공모전 정보, 역할,  필요역량, 제한사항, 우대사항, 연락처 등',
             hintStyle: const TextStyle(fontSize: 15),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
