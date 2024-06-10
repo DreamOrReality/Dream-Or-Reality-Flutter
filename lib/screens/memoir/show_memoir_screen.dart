@@ -11,7 +11,7 @@ class _ShowMemoirScreenState extends State<ShowMemoirScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("회고록 작성"),
+        title: const Text("회고록 조회"),
         centerTitle: true,
       ),
       body: Center(
