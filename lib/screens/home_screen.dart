@@ -335,7 +335,7 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
 // 진행중인 프로젝트 컨테이너
 Widget buildMyProject(BuildContext context, String title, String date) {
   return Container(
-    padding: EdgeInsets.all(18),
+    padding: EdgeInsets.all(15),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       border: Border.all(color: primaryColor, width: 1),
