@@ -241,12 +241,12 @@ Widget buildMyPostTitle(BuildContext context, String username) {
       children: [
         Text(
           "$username님의",
-          style: const TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 18),
         ),
         Text(
           " \"게시글\"",
           style: TextStyle(
-              color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
+              color: primaryColor, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ],
     ),
@@ -314,12 +314,12 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
       children: [
         Text(
           "$username님이 진행중인",
-          style: const TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 18),
         ),
         Text(
           " \"프로젝트\"",
           style: TextStyle(
-              color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
+              color: primaryColor, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ],
     ),
