@@ -128,7 +128,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(
-                color: strokeColor,
+                color: primaryColor,
               ),
             ),
             filled: true,
@@ -170,7 +170,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(
-                color: strokeColor,
+                color: primaryColor,
               ),
             ),
             filled: true,
@@ -222,7 +222,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(
-                color: strokeColor,
+                color: primaryColor,
               ),
             ),
             filled: true,
@@ -264,7 +264,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(
-                color: strokeColor,
+                color: primaryColor,
               ),
             ),
             filled: true,
@@ -334,7 +334,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide: BorderSide(
-                    color: strokeColor,
+                    color: primaryColor,
                   ),
                 ),
                 filled: true,
