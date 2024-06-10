@@ -50,7 +50,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              buildInputTitle(context), // 제목 / 태그 입력
+              buildInputTitle(context), // 제목 입력
               const SizedBox(height: 20),
               buildDropdownTag(context), // 태그 드롭다운
               const SizedBox(height: 20),
@@ -60,7 +60,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
               const SizedBox(height: 20),
               buildDeadlineInput(context), // 마감일 입력
               const SizedBox(height: 30),
-              //저장 버튼
+              // 저장 버튼
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
@@ -70,7 +70,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                           recuritCount, deadline!);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("마감일을 선택해주세요.")));
+                          const SnackBar(content: Text("마감일을 선택해주세요.")));
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -102,15 +102,34 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('게시글 제목', style: TextStyle(fontSize: 18)),
+        const SizedBox(height: 10),
         TextField(
           keyboardType: TextInputType.multiline,
           maxLines: null,
           style: const TextStyle(fontSize: 15),
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: '게시글 제목을 입력해주세요.',
-            hintStyle: TextStyle(
-              fontSize: 15,
+            hintStyle: const TextStyle(fontSize: 15),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
             ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            filled: true,
+            fillColor: inputBackgroundColor,
           ),
           onChanged: (value) {
             setState(() {
@@ -128,12 +147,31 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('태그', style: TextStyle(fontSize: 18)),
+        const SizedBox(height: 10),
         DropdownButtonFormField<String>(
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: '#태그',
-            hintStyle: TextStyle(
-              fontSize: 15,
+            hintStyle: const TextStyle(fontSize: 15),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
             ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            filled: true,
+            fillColor: inputBackgroundColor,
           ),
           items: tags.map((String value) {
             return DropdownMenuItem<String>(
@@ -157,15 +195,34 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('게시글 내용', style: TextStyle(fontSize: 18)),
+        const SizedBox(height: 10),
         TextField(
           keyboardType: TextInputType.multiline,
           maxLines: null,
           style: const TextStyle(fontSize: 15),
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: '게시글 내용을 입력해주세요.',
-            hintStyle: TextStyle(
-              fontSize: 15,
+            hintStyle: const TextStyle(fontSize: 15),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
             ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            filled: true,
+            fillColor: inputBackgroundColor,
           ),
           onChanged: (value) {
             setState(() {
@@ -183,12 +240,31 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('모집 인원', style: TextStyle(fontSize: 18)),
+        const SizedBox(height: 10),
         DropdownButtonFormField<int>(
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: '모집 인원을 선택해주세요.',
-            hintStyle: TextStyle(
-              fontSize: 15,
+            hintStyle: const TextStyle(fontSize: 15),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
             ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            filled: true,
+            fillColor: inputBackgroundColor,
           ),
           items: List<DropdownMenuItem<int>>.generate(
             7,
@@ -214,13 +290,14 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('마감일', style: TextStyle(fontSize: 18)),
+        const SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
             final DateTime? pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime(2024),
-              lastDate: DateTime(2050),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
             );
             if (pickedDate != null) {
               setState(() {
@@ -235,11 +312,29 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                     ? DateFormat('yyyy-MM-dd').format(deadline!)
                     : '',
               ),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: '마감일을 선택해주세요.',
-                hintStyle: TextStyle(
-                  fontSize: 15,
+                hintStyle: const TextStyle(fontSize: 15),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                    color: strokeColor,
+                  ),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                    color: strokeColor,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                    color: strokeColor,
+                  ),
+                ),
+                filled: true,
+                fillColor: inputBackgroundColor,
               ),
               style: const TextStyle(fontSize: 15),
             ),
