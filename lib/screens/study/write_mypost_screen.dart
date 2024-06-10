@@ -11,12 +11,14 @@ class WriteMyPostScreen extends StatefulWidget {
 }
 
 class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
+  // 작성 목록
   late String postTitle;
   late String postTag;
   late String postContent;
   late int recuritCount;
   DateTime? deadline;
 
+  // 태그 - 해당 분야 목록
   final List<String> tags = [
     "백엔드 개발자",
     "프론트엔드 개발자",
@@ -26,6 +28,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     "영상디자이너"
   ];
 
+  // 데이터 베이스 저장 로직
   void savePostToDatabase(String title, String tag, String content, int recurit,
       DateTime deadline) {
     // Save to database
@@ -198,7 +201,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
         const SizedBox(height: 10),
         TextField(
           keyboardType: TextInputType.multiline,
-          maxLines: null,
+          maxLines: 5,
           style: const TextStyle(fontSize: 15),
           decoration: InputDecoration(
             hintText: '게시글 내용을 입력해주세요.',
