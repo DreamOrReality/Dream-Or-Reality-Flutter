@@ -350,7 +350,7 @@ Widget buildMyProject(BuildContext context, String title, String date) {
         //SizedBox(height: 5),
         Text(
           date,
-          style: TextStyle(fontSize: 12),
+          style: TextStyle(fontSize: 12, color: secondTextColor),
         ),
       ],
     ),
