@@ -23,7 +23,7 @@ class _StudyScreenState extends State<StudyScreen> {
   }
 
   Future<void> fetchPosts() async {
-    final response = await http.get(Uri.parse('http://localhost:3000/posts'));
+    final response = await http.get(Uri.parse('http://54.180.227.4:3000/posts'));
 
     if (response.statusCode == 200) {
       setState(() {
