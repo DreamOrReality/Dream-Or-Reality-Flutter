@@ -9,6 +9,8 @@ class StudyDetailScreen extends StatefulWidget {
 }
 
 class _StudyDetailScreenState extends State<StudyDetailScreen> {
+  final TextEditingController _commentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +24,7 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
           children: [
             buildDetailHeader(),
             buildDetailInfo(),
+            buildCommentSection(),
           ],
         ),
       ),
@@ -53,7 +56,7 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
     );
   }
 
-  // 기한 / 인원을 출력
+  // 기한 / 인원 / 태그를 출력
   Widget buildDetailInfo() {
     return Container(
       padding: EdgeInsets.all(25),
@@ -98,6 +101,75 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
     );
   }
 
+  // 댓글 작성 란
+  Widget buildCommentSection() {
+    return Padding(
+      padding: EdgeInsets.all(25),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '댓글 작성',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _commentController,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                    hintText: '댓글을 작성해주세요.',
+                    hintStyle: const TextStyle(fontSize: 15),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        color: strokeColor,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        color: strokeColor,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        color: primaryColor,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: inputBackgroundColor,
+                  ),
+                ),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // 댓글 제출 로직 추가
+                  String comment = _commentController.text;
+                  if (comment.isNotEmpty) {
+                    // 댓글 제출 처리 (예: 서버에 댓글 전송, 로컬 상태 업데이트 등)
+                    print('Comment submitted: $comment');
+                    _commentController.clear();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: primaryColor,
+                    padding: EdgeInsets.fromLTRB(15, 20, 15, 20)),
+                child: Text('제출'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 기한 / 인원 / 태그의 형식을 위젯화
   Widget buildInfoSection({required String title, required Widget content}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
