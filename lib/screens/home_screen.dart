@@ -317,16 +317,26 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
   return Padding(
     padding: const EdgeInsets.all(25.0),
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          "$username님이 진행중인",
-          style: const TextStyle(fontSize: 18),
+        Container(
+          child: Row(
+            children: [
+              Text(
+                "$username님이 진행중인",
+                style: const TextStyle(fontSize: 18),
+              ),
+              Text(
+                " \"프로젝트\"",
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
-        Text(
-          " \"프로젝트\"",
-          style: TextStyle(
-              color: primaryColor, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
+        TextButton(onPressed: null, child: Text('+ 추가하기')),
       ],
     ),
   );
