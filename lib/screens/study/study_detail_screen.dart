@@ -15,7 +15,7 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail'),
+        title: Text('게시글'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
