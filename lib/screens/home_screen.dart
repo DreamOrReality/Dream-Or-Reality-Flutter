@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: buildMyProject(
                           context,
                           project['title'],
-                          formatDate(project['createdAt']),
+                          formatDate(project['deadline']),
                         ),
                       );
                     },
@@ -463,7 +463,7 @@ Widget buildPieChart() {
     PieChartSectionData(
       color: secondaryColor.withOpacity(0.3),
       value: 25,
-      title: 'PHP',
+      title: 'AWS',
       radius: 80,
       titleStyle: TextStyle(
           fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
