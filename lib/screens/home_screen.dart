@@ -110,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   // 나의 게시글을 불러옴
                   children: [
+                    SizedBox(width: 25), //이건 지우지 말것
                     buildMyPost(context, "스택 프론트엔드 개발자 구해요~", "2024-07-01", 1),
                     SizedBox(width: 10),
                     buildMyPost(context, "앱잼 같이 참여하실 분!", "2024-08-15", 1),
