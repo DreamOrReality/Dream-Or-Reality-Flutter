@@ -399,25 +399,41 @@ Widget buildAbilityTitle(BuildContext context, String username) {
 Widget buildPieChart() {
   List<PieChartSectionData> pieChartSections = [
     PieChartSectionData(
-      color: Colors.blue,
-      value: 30,
+      color: primaryColor,
+      value: 35,
       title: 'Flutter',
       radius: 80,
       titleStyle: TextStyle(
           fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
     ),
     PieChartSectionData(
-      color: Colors.green,
-      value: 20,
-      title: 'Dart',
+      color: primaryColor.withOpacity(0.5),
+      value: 15,
+      title: 'Node.js',
       radius: 80,
       titleStyle: TextStyle(
           fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
     ),
     PieChartSectionData(
-      color: Colors.orange,
-      value: 50,
-      title: 'Other',
+      color: secondaryColor,
+      value: 20,
+      title: 'MySQL',
+      radius: 80,
+      titleStyle: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+    ),
+    PieChartSectionData(
+      color: secondaryColor.withOpacity(0.3),
+      value: 25,
+      title: 'PHP',
+      radius: 80,
+      titleStyle: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+    ),
+    PieChartSectionData(
+      color: secondaryColor.withOpacity(0.5),
+      value: 5,
+      title: 'Vue.js',
       radius: 80,
       titleStyle: TextStyle(
           fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
