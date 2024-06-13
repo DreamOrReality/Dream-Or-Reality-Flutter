@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dream_or_reality/theme/color.dart';
 
 class ResultScreen extends StatelessWidget {
   final String type;
@@ -12,28 +13,28 @@ class ResultScreen extends StatelessWidget {
     if (type == 'developer') {
       switch (answers[0]) {
         case 0:
-          return '백엔드 개발자';
+          return '검은 화면과 소통하는\n백엔드 개발자';
         case 1:
-          return '프론트엔드 개발자';
+          return '알록달록 화면과 소통하는\n프론트엔드 개발자';
         case 2:
-          return '게임 개발자';
+          return '이세계와 소통하는\n게임 개발자';
         case 3:
-          return '앱 개발자';
+          return '초록로봇/사과와 소통하는\n앱 개발자';
         case 4:
-          return '인공지능 개발자';
+          return '그래프와 소통하는\n인공지능 개발자';
       }
     } else if (type == 'designer') {
       switch (answers[0]) {
         case 0:
-          return '웹 디자이너';
+          return '1920X1080과 소통하는\n웹 디자이너';
         case 1:
-          return '그래픽 디자이너';
+          return '상상력과 소통하는\n그래픽 디자이너';
         case 2:
-          return '제품 디자이너';
+          return '입체적인것과 소통하는\n제품 디자이너';
         case 3:
-          return '앱 디자이너';
+          return '그리드와 소통하는\n앱 디자이너';
         case 4:
-          return '영상 디자이너';
+          return '모션과 소통하는\n영상 디자이너';
       }
     }
     return '결과 없음';
@@ -44,11 +45,60 @@ class ResultScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('결과'),
+        centerTitle: true,
       ),
       body: Center(
-        child: Text(
-          getResult(),
-          style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+        child: Column(
+          children: [
+            SizedBox(height: 30),
+            Text(
+              '당신의 추천 분야는?',
+              style:
+                  TextStyle(color: secondaryColor, fontFamily: 'PartialSansKR'),
+            ),
+            SizedBox(height: 30),
+            Text(
+              getResult(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20.0,
+                fontFamily: 'PartialSansKR',
+                color: primaryColor,
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(20),
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 0, // 그림자 없음
+                    textStyle: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/',
+                      (Route<dynamic> route) => false, // 모든 페이지를 pop
+                    );
+                  },
+                  child: const Text(
+                    '홈으로',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
