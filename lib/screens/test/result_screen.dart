@@ -7,21 +7,36 @@ class ResultScreen extends StatelessWidget {
 
   const ResultScreen({super.key, required this.type, required this.answers});
 
-  String getResult() {
+  dynamic getResult() {
     // 결과를 계산하는 로직을 여기에 추가합니다.
     // 간단한 예로, 첫 번째 질문의 답을 기준으로 결과를 정합니다.
     if (type == 'developer') {
       switch (answers[0]) {
         case 0:
-          return '검은 화면과 소통하는\n백엔드 개발자';
+          return {
+            'text': '검은 화면과 소통하는\n백엔드 개발자',
+            'image': 'assets/img/illustration/developer/backend.png',
+          };
         case 1:
-          return '알록달록 화면과 소통하는\n프론트엔드 개발자';
+          return {
+            'text': '알록달록 화면과 소통하는\n프론트엔드 개발자',
+            'image': 'assets/img/illustration/developer/frontend.png',
+          };
         case 2:
-          return '이세계와 소통하는\n게임 개발자';
+          return {
+            'text': '이세계와 소통하는\n게임 개발자',
+            'image': 'assets/img/illustration/developer/game.png',
+          };
         case 3:
-          return '초록로봇/사과와 소통하는\n앱 개발자';
+          return {
+            'text': '초록로봇/사과와 소통하는\n앱 개발자',
+            'image': 'assets/img/illustration/developer/app.png',
+          };
         case 4:
-          return '그래프와 소통하는\n인공지능 개발자';
+          return {
+            'text': '그래프와 소통하는\n인공지능 개발자',
+            'image': 'assets/img/illustration/developer/ai.png',
+          };
       }
     } else if (type == 'designer') {
       switch (answers[0]) {
@@ -42,6 +57,8 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    dynamic result = getResult();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('결과'),
@@ -49,7 +66,8 @@ class ResultScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          children: [
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
             SizedBox(height: 30),
             Text(
               '당신의 추천 분야는?',
@@ -57,14 +75,22 @@ class ResultScreen extends StatelessWidget {
                   TextStyle(color: secondaryColor, fontFamily: 'PartialSansKR'),
             ),
             SizedBox(height: 30),
-            Text(
-              getResult(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontFamily: 'PartialSansKR',
-                color: primaryColor,
-              ),
+            Column(
+              children: [
+                Text(
+                  result['text'],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontFamily: 'PartialSansKR',
+                    color: primaryColor,
+                  ),
+                ),
+                SizedBox(height: 90),
+                Image.asset(
+                  result['image'],
+                ),
+              ],
             ),
             Spacer(),
             Padding(
