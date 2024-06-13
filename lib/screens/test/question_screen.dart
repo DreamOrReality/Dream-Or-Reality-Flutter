@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/color.dart';
 import 'result_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   Map<String, List<Map<String, dynamic>>> questions = {
     "developer": [
       {
-        "question": "개발 작업을 할 때 가장 중요하게 생각하는 것은 무엇인가요?",
+        "question": "개발 작업을 할 때, 가장 중요하게 생각하는 것은 무엇인가요?",
         "choices": [
           "코드 품질",
           "사용자 인터페이스",
@@ -121,6 +122,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   final List<int> _answers = [];
 
+  // 다음 질문으로 넘어가는 로직
   void _nextQuestion(int choice) {
     setState(() {
       _answers.add(choice);
@@ -143,25 +145,71 @@ class _QuestionScreenState extends State<QuestionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            '질문 ${_currentQuestionIndex + 1}/${questions[widget.type]!.length}'),
+          '${_currentQuestionIndex + 1} / ${questions[widget.type]!.length}',
+        ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              questions[widget.type]![_currentQuestionIndex]['question'],
-              style:
-                  const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            // 질문
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                questions[widget.type]![_currentQuestionIndex]['question'],
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 50.0),
+            // 선택지
             ...List.generate(
               questions[widget.type]![_currentQuestionIndex]['choices'].length,
-              (index) => ElevatedButton(
-                onPressed: () => _nextQuestion(index),
-                child: Text(questions[widget.type]![_currentQuestionIndex]
-                    ['choices'][index]),
+              (index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: OutlinedButton(
+                  onPressed: () => _nextQuestion(index),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: inputBackgroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      side: BorderSide(color: strokeColor),
+                    ),
+                    fixedSize: Size.fromHeight(60),
+                    textStyle: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
+                  ).copyWith(
+                    side: MaterialStateProperty.resolveWith<BorderSide>(
+                      (Set<MaterialState> states) {
+                        return BorderSide(color: strokeColor);
+                      },
+                    ),
+                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.focused)) {
+                          return secondaryColor;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      questions[widget.type]![_currentQuestionIndex]['choices']
+                          [index],
+                      style: TextStyle(color: Colors.black, fontSize: 17),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
