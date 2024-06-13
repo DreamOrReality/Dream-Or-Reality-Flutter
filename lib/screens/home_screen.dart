@@ -137,8 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     (project) {
                       // 내가 진행중인 프로젝트를 불러옴
                       return Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 10.0), // Added padding here
+                        padding: const EdgeInsets.only(bottom: 10.0),
                         child: buildMyProject(
                           context,
                           project['title'],
@@ -173,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // 마이페이지 접속 막기
   void showMyPageAlert(BuildContext context) {
     showDialog(
       context: context,
@@ -336,11 +336,16 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
             ],
           ),
         ),
-        TextButton(onPressed: null, child: Text('+ 추가하기')),
+        TextButton(
+          onPressed: () {},
+          child: Text('+ 추가하기', style: TextStyle(color: secondTextColor)),
+        ),
       ],
     ),
   );
 }
+
+showAddProjectDialog(BuildContext context) {}
 
 // 진행중인 프로젝트 컨테이너
 Widget buildMyProject(BuildContext context, String title, String date) {

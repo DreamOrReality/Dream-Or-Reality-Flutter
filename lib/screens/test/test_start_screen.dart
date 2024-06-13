@@ -16,6 +16,7 @@ class TestStartScreen extends StatelessWidget {
               '테스트로 알아보는',
               style: TextStyle(
                 color: secondaryColor,
+                fontFamily: 'PartialSansKR',
                 fontSize: 20,
               ),
             ),
@@ -23,6 +24,7 @@ class TestStartScreen extends StatelessWidget {
               '나의 분야 찾기',
               style: TextStyle(
                 color: primaryColor,
+                fontFamily: 'PartialSansKR',
                 fontSize: 35,
               ),
             ),
@@ -35,7 +37,7 @@ class TestStartScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(20),
                     backgroundColor: primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -53,7 +55,10 @@ class TestStartScreen extends StatelessWidget {
                       '/select',
                     );
                   },
-                  child: const Text('테스트 시작하기'),
+                  child: const Text(
+                    '테스트 시작하기',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
