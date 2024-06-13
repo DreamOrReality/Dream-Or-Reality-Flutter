@@ -68,7 +68,10 @@ class _MemoirScreenState extends State<MemoirScreen> {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pop(context, '/');
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/',
+                (Route<dynamic> route) => false, // 모든 페이지를 pop
+              );
               break;
             case 1:
               Navigator.pushNamed(context, '/study');

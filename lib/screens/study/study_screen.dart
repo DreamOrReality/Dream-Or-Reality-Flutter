@@ -23,7 +23,8 @@ class _StudyScreenState extends State<StudyScreen> {
   }
 
   Future<void> fetchPosts() async {
-    final response = await http.get(Uri.parse('http://54.180.227.4:3000/posts'));
+    final response =
+        await http.get(Uri.parse('http://54.180.227.4:3000/posts'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -71,7 +72,10 @@ class _StudyScreenState extends State<StudyScreen> {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pop(context, '/');
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/',
+                (Route<dynamic> route) => false, // 모든 페이지를 pop
+              );
               break;
             case 2:
               Navigator.pushNamed(context, '/memoir');
