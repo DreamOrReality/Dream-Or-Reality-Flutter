@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -149,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            buildPieChart(),
           ],
         ),
       ),
@@ -368,6 +370,50 @@ Widget buildMyProject(BuildContext context, String title, String date) {
           style: TextStyle(fontSize: 12, color: secondTextColor),
         ),
       ],
+    ),
+  );
+}
+
+// 파이차트
+Widget buildPieChart() {
+  List<PieChartSectionData> pieChartSections = [
+    PieChartSectionData(
+      color: Colors.blue,
+      value: 30,
+      title: 'Flutter',
+      radius: 80,
+      titleStyle: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+    ),
+    PieChartSectionData(
+      color: Colors.green,
+      value: 20,
+      title: 'Dart',
+      radius: 80,
+      titleStyle: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+    ),
+    PieChartSectionData(
+      color: Colors.orange,
+      value: 50,
+      title: 'Other',
+      radius: 80,
+      titleStyle: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+    ),
+  ];
+
+  return Container(
+    height: 300, // 도넛형 파이차트의 전체 높이
+    child: PieChart(
+      PieChartData(
+        sections: pieChartSections,
+        borderData: FlBorderData(show: false),
+        centerSpaceRadius: 40, // 중앙 공간 반지름 (도넛의 크기를 조절)
+        sectionsSpace: 0,
+        pieTouchData: PieTouchData(enabled: false),
+        startDegreeOffset: -90, // 시작 각도 설정
+      ),
     ),
   );
 }
