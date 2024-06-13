@@ -21,12 +21,17 @@ flutter:
   assets:
     - assets/img/illustration/developer.png
     - assets/img/illustration/designer.png
+    - assets/img/illustration/test_start.png
     - assets/img/icon/home.png
     - assets/img/icon/document.png
     - assets/img/icon/chat.png
     - assets/img/icon/notebook.png
     - assets/img/icon/user.png
-    - assets/img/illustration/test_start.png
+    - assets/img/illustration/developer/ai.png
+    - assets/img/illustration/developer/app.png
+    - assets/img/illustration/developer/backend.png
+    - assets/img/illustration/developer/frontend.png
+    - assets/img/illustration/developer/game.png
     - assets/json/data.json
   fonts:
     - family: PartialSansKR
