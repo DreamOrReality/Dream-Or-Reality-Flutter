@@ -188,7 +188,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ).copyWith(
                     side: MaterialStateProperty.resolveWith<BorderSide>(
                       (Set<MaterialState> states) {
-                        return BorderSide(color: strokeColor);
+                        return BorderSide(color: secondaryColor);
                       },
                     ),
                     overlayColor: MaterialStateProperty.resolveWith<Color?>(
