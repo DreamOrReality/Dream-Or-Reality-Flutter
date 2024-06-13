@@ -380,15 +380,28 @@ Widget buildAbilityTitle(BuildContext context, String username) {
   return Padding(
     padding: const EdgeInsets.all(25.0),
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          "$username님의",
-          style: const TextStyle(fontSize: 18),
+        Container(
+          child: Row(
+            children: [
+              Text(
+                "$username님의",
+                style: const TextStyle(fontSize: 18),
+              ),
+              Text(
+                " \"능력치\"",
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
-        Text(
-          " \"능력치\"",
-          style: TextStyle(
-              color: primaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+        TextButton(
+          onPressed: () {},
+          child: Text('수정하기', style: TextStyle(color: secondTextColor)),
         ),
       ],
     ),
