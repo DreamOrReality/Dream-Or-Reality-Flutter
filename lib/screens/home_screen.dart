@@ -340,7 +340,9 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            showAddEditAlert(context);
+          },
           child: Text('+ 추가하기', style: TextStyle(color: secondTextColor)),
         ),
       ],
@@ -400,11 +402,34 @@ Widget buildAbilityTitle(BuildContext context, String username) {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            showAddEditAlert(context);
+          },
           child: Text('수정하기', style: TextStyle(color: secondTextColor)),
         ),
       ],
     ),
+  );
+}
+
+// 프로젝트 추가/수정 막기
+void showAddEditAlert(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('알림'),
+        content: Text('원활한 전시를 위해 이 기능은 사용하실 수 없습니다!'),
+        actions: [
+          TextButton(
+            child: Text('확인'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
   );
 }
 
