@@ -150,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            buildAbilityTitle(context, _userName ?? 'Unknown'),
             buildPieChart(),
           ],
         ),
@@ -368,6 +369,26 @@ Widget buildMyProject(BuildContext context, String title, String date) {
         Text(
           date,
           style: TextStyle(fontSize: 12, color: secondTextColor),
+        ),
+      ],
+    ),
+  );
+}
+
+// ~~님의 능력치
+Widget buildAbilityTitle(BuildContext context, String username) {
+  return Padding(
+    padding: const EdgeInsets.all(25.0),
+    child: Row(
+      children: [
+        Text(
+          "$username님의",
+          style: const TextStyle(fontSize: 18),
+        ),
+        Text(
+          " \"능력치\"",
+          style: TextStyle(
+              color: primaryColor, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ],
     ),
