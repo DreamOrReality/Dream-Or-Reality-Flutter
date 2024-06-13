@@ -41,15 +41,30 @@ class ResultScreen extends StatelessWidget {
     } else if (type == 'designer') {
       switch (answers[0]) {
         case 0:
-          return '1920X1080과 소통하는\n웹 디자이너';
+          return {
+            'text': '1920X1080과 소통하는\n웹 디자이너',
+            'image': 'assets/img/illustration/designer/web.png',
+          };
         case 1:
-          return '상상력과 소통하는\n그래픽 디자이너';
+          return {
+            'text': '상상력과 소통하는\n그래픽 디자이너',
+            'image': 'assets/img/illustration/designer/graphic.png',
+          };
         case 2:
-          return '입체적인것과 소통하는\n제품 디자이너';
+          return {
+            'text': '입체적인것과 소통하는\n제품 디자이너',
+            'image': 'assets/img/illustration/designer/product.png',
+          };
         case 3:
-          return '그리드와 소통하는\n앱 디자이너';
+          return {
+            'text': '그리드와 소통하는\n앱 디자이너',
+            'image': 'assets/img/illustration/designer/app.png',
+          };
         case 4:
-          return '모션과 소통하는\n영상 디자이너';
+          return {
+            'text': '모션과 소통하는\n영상 디자이너',
+            'image': 'assets/img/illustration/designer/video.png',
+          };
       }
     }
     return '결과 없음';
