@@ -32,6 +32,11 @@ flutter:
     - assets/img/illustration/developer/backend.png
     - assets/img/illustration/developer/frontend.png
     - assets/img/illustration/developer/game.png
+    - assets/img/illustration/designer/app.png
+    - assets/img/illustration/designer/graphic.png
+    - assets/img/illustration/designer/product.png
+    - assets/img/illustration/designer/video.png
+    - assets/img/illustration/designer/web.png
     - assets/json/data.json
   fonts:
     - family: PartialSansKR
