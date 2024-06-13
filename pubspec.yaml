@@ -20,6 +20,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/img/illustration/developer.png
+    - assets/img/illustration/designer.png
     - assets/img/icon/home.png
     - assets/img/icon/document.png
     - assets/img/icon/chat.png
