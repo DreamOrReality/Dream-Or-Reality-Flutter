@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
-
 import 'question_screen.dart';
 
-class SelectScreen extends StatelessWidget {
+class SelectScreen extends StatefulWidget {
   const SelectScreen({super.key});
+
+  @override
+  _SelectScreenState createState() => _SelectScreenState();
+}
+
+class _SelectScreenState extends State<SelectScreen> {
+  bool isDeveloperSelected = false;
+  bool isDesignerSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +29,10 @@ class SelectScreen extends StatelessWidget {
               // 개발자 선택 버튼
               InkWell(
                 onTap: () {
+                  setState(() {
+                    isDeveloperSelected = true;
+                    isDesignerSelected = false;
+                  });
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -32,7 +43,10 @@ class SelectScreen extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    border: Border.all(color: strokeColor, width: 1.5),
+                    border: Border.all(
+                        color:
+                            isDeveloperSelected ? secondaryColor : strokeColor,
+                        width: 1.5),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
@@ -55,6 +69,10 @@ class SelectScreen extends StatelessWidget {
               // 디자이너 선택 버튼
               InkWell(
                 onTap: () {
+                  setState(() {
+                    isDeveloperSelected = false;
+                    isDesignerSelected = true;
+                  });
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -65,7 +83,10 @@ class SelectScreen extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    border: Border.all(color: strokeColor, width: 1.5),
+                    border: Border.all(
+                        color:
+                            isDesignerSelected ? secondaryColor : strokeColor,
+                        width: 1.5),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
