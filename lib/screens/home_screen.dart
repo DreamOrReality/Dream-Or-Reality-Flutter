@@ -327,7 +327,7 @@ Widget buildMyProjectTitle(BuildContext context, String username) {
           child: Row(
             children: [
               Text(
-                "$username님이 진행중인",
+                "$username님의",
                 style: const TextStyle(fontSize: 18),
               ),
               Text(
