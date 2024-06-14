@@ -50,7 +50,7 @@ class _WriteMemoirScreenState extends State<WriteMemoirScreen> {
             "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
 
         final response = await http.post(
-          Uri.parse('http://54.180.227.4:3000/user/saveMemoir'),
+          Uri.parse('http://43.202.54.53:3000/user/saveMemoir'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
