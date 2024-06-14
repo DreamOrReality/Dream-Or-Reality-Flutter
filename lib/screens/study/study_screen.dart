@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../theme/color.dart';
+
 class StudyScreen extends StatefulWidget {
   const StudyScreen({Key? key}) : super(key: key);
 
@@ -76,7 +78,7 @@ class _StudyScreenState extends State<StudyScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.blue, // primaryColor 변수를 사용할 수 없어 임의의 색상으로 설정
+        backgroundColor: primaryColor,
       ),
     );
   }
