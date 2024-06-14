@@ -13,7 +13,7 @@ class StudyScreen extends StatefulWidget {
 }
 
 class _StudyScreenState extends State<StudyScreen> {
-  List<dynamic> projects = []; // 프로젝트 데이터를 저장할 리스트
+  List<dynamic> projects = [];
 
   @override
   void initState() {
@@ -23,25 +23,13 @@ class _StudyScreenState extends State<StudyScreen> {
 
   Future<void> fetchProjects() async {
     final response = await http.post(
-      Uri.parse('http://54.180.227.4:3000/user/getAllProjects'),
+      Uri.parse('http://43.202.54.53:3000/user/getAllProjects'),
     );
 
     if (response.statusCode == 200) {
       setState(() {
         projects = json.decode(response.body);
       });
-
-      // 콘솔에 데이터 출력
-      print('Fetched projects:');
-      for (var project in projects) {
-        print('Title: ${project['title']}');
-        print('Deadline: ${project['deadline']}');
-        print('Content: ${project['content']}');
-        print('Recruit: ${project['recurit']}');
-        print('CreatedAt: ${project['createdAt']}');
-        print('Username: ${project['username']}');
-        print('------------------------------------');
-      }
     } else {
       throw Exception('Failed to load projects');
     }

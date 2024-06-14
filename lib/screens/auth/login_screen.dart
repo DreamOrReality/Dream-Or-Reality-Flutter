@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://54.180.227.4:3000/user/login'),
+        Uri.parse('http://43.202.54.53:3000/user/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _getUserName(int userId) async {
     try {
       final response = await http.post(
-        Uri.parse('http://54.180.227.4:3000/user/getUserName'),
+        Uri.parse('http://43.202.54.53:3000/user/getUserName'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
