@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../theme/color.dart';
+import '../../widgets/bottom_navtion_bar_widget.dart';
 
 class StudyScreen extends StatefulWidget {
   const StudyScreen({Key? key}) : super(key: key);
@@ -80,30 +81,71 @@ class _StudyScreenState extends State<StudyScreen> {
         ),
         backgroundColor: primaryColor,
       ),
+      // 하단 내비게이션 바
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: 1,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/',
+                (Route<dynamic> route) => false, // 모든 페이지를 pop
+              );
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/memoir');
+              break;
+            case 3:
+              showMyPageAlert(context);
+              break;
+          }
+        },
+      ),
     );
   }
 
-  // 프로젝트 정보를 보여주는 위젯
-  Widget buildProject(BuildContext context, String title, String content) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey, width: 1)),
-      ),
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+  // 마이페이지 접속 막기
+  void showMyPageAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('알림'),
+          content: Text('원활한 전시를 위해 마이페이지 탭에는 접속하실 수 없습니다!'),
+          actions: [
+            TextButton(
+              child: Text('확인'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-          ),
-          SizedBox(height: 8),
-          Text(content),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
+}
+
+// 프로젝트 정보를 보여주는 위젯
+Widget buildProject(BuildContext context, String title, String content) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border(bottom: BorderSide(color: Colors.grey, width: 1)),
+    ),
+    padding: const EdgeInsets.all(20.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(content),
+      ],
+    ),
+  );
 }
