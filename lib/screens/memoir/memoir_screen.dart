@@ -23,6 +23,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
 
   int? userId;
   List<dynamic> memoirs = []; // List to store fetched memoirs
+  bool isLoading = false; // Flag to indicate data loading state
 
   @override
   void initState() {
@@ -47,6 +48,10 @@ class _MemoirScreenState extends State<MemoirScreen> {
   Future<void> fetchMemoir(DateTime date) async {
     if (userId == null) return;
 
+    setState(() {
+      isLoading = true; // 데이터 로딩 중임을 표시
+    });
+
     final response = await http.post(
       Uri.parse('http://43.202.54.53:3000/user/getMemoir'),
       headers: <String, String>{
@@ -58,12 +63,20 @@ class _MemoirScreenState extends State<MemoirScreen> {
       }),
     );
 
+    setState(() {
+      isLoading = false; // 데이터 로딩 완료
+    });
+
     if (response.statusCode == 200) {
       setState(() {
         memoirs = jsonDecode(response.body);
       });
     } else {
       print('Failed to load memoir');
+      // Memoir 데이터를 로드할 수 없는 경우 memoirs를 비워줍니다.
+      setState(() {
+        memoirs = [];
+      });
     }
   }
 
@@ -81,59 +94,68 @@ class _MemoirScreenState extends State<MemoirScreen> {
             selectedDate: selectedDate,
             onDaySelected: onDaySelected,
           ),
-          // 리스트뷰
+          // 리스트뷰 혹은 메시지 출력
           Expanded(
-            child: ListView.builder(
-              itemCount: memoirs.length + 1,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  // 첫 번째 아이템에는 선택된 날짜 표시
-                  return ListTile(
-                    title: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(color: strokeColor),
-                            top: BorderSide(color: strokeColor)),
+            child: isLoading
+                ? Center(child: CircularProgressIndicator())
+                : memoirs.isEmpty
+                    ? Center(
+                        child: Text('아직 회고록이 작성되지 않았어요..'),
+                      )
+                    : ListView.builder(
+                        itemCount: memoirs.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            // 첫 번째 아이템에는 선택된 날짜 표시
+                            return ListTile(
+                              title: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(color: strokeColor),
+                                    top: BorderSide(color: strokeColor),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
+                                      style: TextStyle(
+                                          color: primaryColor, fontSize: 19),
+                                    ),
+                                    Text(' 을 기록해요!',
+                                        style: TextStyle(fontSize: 19)),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            // Memoir 데이터가 있는 경우 해당 날짜의 Memoir 표시
+                            final memoirIndex = index - 1;
+                            final title = '회고록 ${memoirIndex + 1}'; // 회고록 제목
+                            final content =
+                                memoirs[memoirIndex]['content']; // 회고록 내용
+                            return ListTile(
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    title,
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    content,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(color: secondTextColor),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        },
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
-                            style: TextStyle(color: primaryColor, fontSize: 19),
-                          ),
-                          Text(' 을 기록해요!', style: TextStyle(fontSize: 19)),
-                        ],
-                      ),
-                    ),
-                  );
-                } else {
-                  // Memoir 데이터가 있는 경우 해당 날짜의 Memoir 표시
-                  final memoirIndex = index - 1;
-                  final title = '회고록 ${memoirIndex + 1}'; // 회고록 제목
-                  final content = memoirs[memoirIndex]['content']; // 회고록 내용
-                  return ListTile(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          content,
-                          overflow: TextOverflow.ellipsis, // 글자가 넘칠 경우 ...으로 표시
-                          style: TextStyle(color: secondTextColor),
-                        ),
-                      ],
-                    ),
-                    // 추가적인 디테일 추가나 필요한 사항 적용
-                  );
-                }
-              },
-            ),
           ),
         ],
       ),
