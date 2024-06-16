@@ -22,8 +22,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
   );
 
   int? userId;
-  Map<DateTime, List<dynamic>> memoirMap =
-      {}; // Map to store fetched memoirs for each date
+  List<dynamic> memoirs = []; // List to store fetched memoirs
 
   @override
   void initState() {
@@ -61,8 +60,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
 
     if (response.statusCode == 200) {
       setState(() {
-        List<dynamic> memoirs = jsonDecode(response.body);
-        memoirMap[date] = memoirs;
+        memoirs = jsonDecode(response.body);
       });
     } else {
       print('Failed to load memoir');
@@ -85,10 +83,12 @@ class _MemoirScreenState extends State<MemoirScreen> {
           ),
           // 리스트뷰
           Expanded(
-            child: ListView.builder(
-              itemCount: memoirMap.containsKey(selectedDate)
-                  ? memoirMap[selectedDate]!.length + 1
-                  : 1,
+            child: ListView.separated(
+              itemCount: memoirs.length + 1,
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.grey[400],
+                height: 1,
+              ),
               itemBuilder: (context, index) {
                 if (index == 0) {
                   // 첫 번째 아이템에는 선택된 날짜 표시
@@ -100,19 +100,27 @@ class _MemoirScreenState extends State<MemoirScreen> {
                   );
                 } else {
                   // Memoir 데이터가 있는 경우 해당 날짜의 Memoir 표시
-                  final memoirs = memoirMap[selectedDate];
-                  if (memoirs != null && memoirs.isNotEmpty) {
-                    final memoirIndex = index - 1;
-                    return ListTile(
-                      title: Text('${memoirs[memoirIndex]['content']}'),
-                      // 추가적인 디테일 추가나 필요한 사항 적용
-                    );
-                  } else {
-                    // Memoir 데이터가 없는 경우 '데이터가 없습니다' 메시지 표시
-                    return ListTile(
-                      title: Text('데이터가 없습니다'),
-                    );
-                  }
+                  final memoirIndex = index - 1;
+                  final title = '회고록 ${memoirIndex + 1}'; // 회고록 제목
+                  final content = memoirs[memoirIndex]['content']; // 회고록 내용
+                  return ListTile(
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          _truncateText(content), // 글이 너무 길면 줄여서 표시
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    // 추가적인 디테일 추가나 필요한 사항 적용
+                  );
                 }
               },
             ),
@@ -164,6 +172,14 @@ class _MemoirScreenState extends State<MemoirScreen> {
         },
       ),
     );
+  }
+
+  String _truncateText(String text) {
+    const maxLength = 50; // 최대 길이 설정
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return '${text.substring(0, maxLength)}...'; // 글자 길이 초과 시 ...으로 줄이기
   }
 
   void showMyPageAlert(BuildContext context) {
