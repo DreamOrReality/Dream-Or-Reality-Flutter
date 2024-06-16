@@ -1,8 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
+import '../../theme/color.dart';
 
 class WriteMyPostScreen extends StatefulWidget {
   const WriteMyPostScreen({super.key});
@@ -12,37 +13,35 @@ class WriteMyPostScreen extends StatefulWidget {
 }
 
 class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
+  // 작성 목록
   late String postTitle = '';
   late String postTag = '';
   late String postContent = '';
-  late int recruitCount = 0;
+  late int recuritCount = 0;
   DateTime? deadline;
 
-  // Function to get user ID from SharedPreferences
-  Future<int?> _getUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('userId');
-  }
+  // 태그 - 해당 분야 목록
+  final List<String> tags = [
+    "백엔드 개발자",
+    "프론트엔드 개발자",
+    "모바일 앱 개발자",
+    "UI/UX 디자이너",
+    "3D 디자이너",
+    "영상디자이너"
+  ];
 
+  // 데이터 베이스 저장 로직
   Future<void> savePostToDatabase() async {
-    final userId = await _getUserId();
-    if (userId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("사용자 정보를 찾을 수 없습니다.")),
-      );
-      return;
-    }
-
     final url = Uri.parse('http://43.202.54.53:3000/user/saveProjects');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'UserId': userId,
+        'UserId': 2, // Replace with actual user id
         'title': postTitle,
         'tag': postTag,
         'content': postContent,
-        'recruit': recruitCount,
+        'recruit': recuritCount,
         'deadline': DateFormat('yyyy-MM-dd').format(deadline!),
       }),
     );
@@ -72,16 +71,17 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              buildInputTitle(context),
+              buildInputTitle(context), // 제목 입력
               const SizedBox(height: 20),
-              buildDropdownTag(context),
+              buildDropdownTag(context), // 태그 드롭다운
               const SizedBox(height: 20),
-              buildInputContent(context),
+              buildInputContent(context), // 게시글 내용 입력
               const SizedBox(height: 20),
-              buildRecruitInput(context),
+              buildRecuritInput(context), // 모집 인원 입력
               const SizedBox(height: 20),
-              buildDeadlineInput(context),
+              buildDeadlineInput(context), // 마감일 입력
               const SizedBox(height: 30),
+              // 저장 버튼
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
@@ -90,13 +90,12 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                       savePostToDatabase();
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("마감일을 선택해주세요.")),
-                      );
+                          const SnackBar(content: Text("마감일을 선택해주세요.")));
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.all(15),
+                    backgroundColor: primaryColor,
+                    padding: const EdgeInsets.all(23),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -104,10 +103,9 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                   child: const Text(
                     '저장하기',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
                   ),
                 ),
               ),
@@ -118,6 +116,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
+  // 제목 입력
   Widget buildInputTitle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,10 +132,24 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             hintStyle: const TextStyle(fontSize: 15),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: primaryColor,
+              ),
             ),
             filled: true,
-            fillColor: Colors.grey.shade200,
+            fillColor: inputBackgroundColor,
           ),
           onChanged: (value) {
             setState(() {
@@ -148,6 +161,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
+  // 태그 드롭다운
   Widget buildDropdownTag(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,19 +174,31 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             hintStyle: const TextStyle(fontSize: 15),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: primaryColor,
+              ),
             ),
             filled: true,
-            fillColor: Colors.grey.shade200,
+            fillColor: inputBackgroundColor,
           ),
-          items: [
-            DropdownMenuItem(child: Text('백엔드 개발자'), value: '백엔드 개발자'),
-            DropdownMenuItem(child: Text('프론트엔드 개발자'), value: '프론트엔드 개발자'),
-            DropdownMenuItem(child: Text('모바일 앱 개발자'), value: '모바일 앱 개발자'),
-            DropdownMenuItem(child: Text('UI/UX 디자이너'), value: 'UI/UX 디자이너'),
-            DropdownMenuItem(child: Text('3D 디자이너'), value: '3D 디자이너'),
-            DropdownMenuItem(child: Text('영상디자이너'), value: '영상디자이너'),
-          ],
+          items: tags.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value, style: const TextStyle(fontSize: 15)),
+            );
+          }).toList(),
           onChanged: (value) {
             setState(() {
               postTag = value!;
@@ -183,6 +209,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
+  // 내용 입력
   Widget buildInputContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,14 +221,29 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
           maxLines: 5,
           style: const TextStyle(fontSize: 15),
           decoration: InputDecoration(
-            hintText: '게시글 내용을 입력해주세요.',
+            hintText:
+                '아래 내용을 포함하여 주세요.\nex) 공모전 정보, 역할,  필요역량, 제한사항, 우대사항, 연락처 등',
             hintStyle: const TextStyle(fontSize: 15),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: primaryColor,
+              ),
             ),
             filled: true,
-            fillColor: Colors.grey.shade200,
+            fillColor: inputBackgroundColor,
           ),
           onChanged: (value) {
             setState(() {
@@ -213,7 +255,8 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
-  Widget buildRecruitInput(BuildContext context) {
+  // 모집 인원 입력
+  Widget buildRecuritInput(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -225,20 +268,36 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
             hintStyle: const TextStyle(fontSize: 15),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: strokeColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: primaryColor,
+              ),
             ),
             filled: true,
-            fillColor: Colors.grey.shade200,
+            fillColor: inputBackgroundColor,
           ),
-          items: List.generate(7, (index) {
-            return DropdownMenuItem(
-              child: Text((index + 1).toString()),
-              value: index + 1,
-            );
-          }),
+          items: List<DropdownMenuItem<int>>.generate(
+            7,
+            (int index) => DropdownMenuItem<int>(
+              value: index,
+              child:
+                  Text(index.toString(), style: const TextStyle(fontSize: 15)),
+            ),
+          ),
           onChanged: (value) {
             setState(() {
-              recruitCount = value!;
+              recuritCount = value!;
             });
           },
         ),
@@ -246,6 +305,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
     );
   }
 
+  // 마감일 입력
   Widget buildDeadlineInput(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,10 +338,24 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                 hintStyle: const TextStyle(fontSize: 15),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.grey),
+                  borderSide: BorderSide(
+                    color: strokeColor,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                    color: strokeColor,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade200,
+                fillColor: inputBackgroundColor,
               ),
               style: const TextStyle(fontSize: 15),
             ),
