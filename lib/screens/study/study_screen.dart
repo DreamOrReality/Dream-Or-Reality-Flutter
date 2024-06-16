@@ -137,6 +137,8 @@ Widget buildProject(BuildContext context, String title, String tag,
         Text(
           content,
           style: TextStyle(fontSize: 16, color: secondTextColor),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1, // 한 줄만 표시하고 나머지는 ...으로 표시
         ),
         SizedBox(height: 5),
         Container(
