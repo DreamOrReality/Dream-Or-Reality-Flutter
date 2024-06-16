@@ -83,12 +83,8 @@ class _MemoirScreenState extends State<MemoirScreen> {
           ),
           // 리스트뷰
           Expanded(
-            child: ListView.separated(
+            child: ListView.builder(
               itemCount: memoirs.length + 1,
-              separatorBuilder: (context, index) => Divider(
-                color: Colors.grey[400],
-                height: 1,
-              ),
               itemBuilder: (context, index) {
                 if (index == 0) {
                   // 첫 번째 아이템에는 선택된 날짜 표시
