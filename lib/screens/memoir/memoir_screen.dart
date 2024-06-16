@@ -97,9 +97,9 @@ class _MemoirScreenState extends State<MemoirScreen> {
                       children: [
                         Text(
                           '${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
-                          style: TextStyle(color: primaryColor, fontSize: 17),
+                          style: TextStyle(color: primaryColor, fontSize: 19),
                         ),
-                        Text(' 을 기록해요!', style: TextStyle(fontSize: 17)),
+                        Text(' 을 기록해요!', style: TextStyle(fontSize: 19)),
                       ],
                     ),
                   );
@@ -114,12 +114,13 @@ class _MemoirScreenState extends State<MemoirScreen> {
                       children: [
                         Text(
                           title,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 18),
                         ),
-                        SizedBox(height: 4),
+                        SizedBox(height: 8),
                         Text(
                           content,
                           overflow: TextOverflow.ellipsis, // 글자가 넘칠 경우 ...으로 표시
+                          style: TextStyle(color: secondTextColor),
                         ),
                       ],
                     ),
