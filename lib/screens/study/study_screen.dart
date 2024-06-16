@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart'; // 추가
 
 import '../../theme/color.dart';
 import '../../widgets/bottom_navtion_bar_widget.dart';
@@ -36,6 +38,12 @@ class _StudyScreenState extends State<StudyScreen> {
     }
   }
 
+  Future<void> saveProjectId(int projectId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('selected_project_id', projectId);
+    print('Saved Project ID: $projectId'); // 콘솔에 저장된 프로젝트 ID 출력
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +56,15 @@ class _StudyScreenState extends State<StudyScreen> {
         itemCount: projects.length, // 프로젝트 개수
         itemBuilder: (BuildContext context, int index) {
           final project = projects[index];
-          return buildProject(context, project['title'], project['tag'],
-              project['content'], project['username'], project['createdAt']);
+          return GestureDetector(
+            onTap: () {
+              int projectId = project['ProjectId'];
+              saveProjectId(projectId); // 프로젝트 ID 저장
+              // 다른 화면으로 이동하거나 원하는 작업 수행
+            },
+            child: buildProject(context, project['title'], project['tag'],
+                project['content'], project['username'], project['createdAt'], project['ProjectId']),
+          );
         },
       ),
       // 플로팅 버튼
@@ -79,7 +94,7 @@ class _StudyScreenState extends State<StudyScreen> {
             case 0:
               Navigator.of(context).pushNamedAndRemoveUntil(
                 '/',
-                (Route<dynamic> route) => false, // 모든 페이지를 pop
+                    (Route<dynamic> route) => false, // 모든 페이지를 pop
               );
               break;
             case 2:
@@ -118,7 +133,14 @@ class _StudyScreenState extends State<StudyScreen> {
 
 // 프로젝트 정보를 보여주는 위젯
 Widget buildProject(BuildContext context, String title, String tag,
-    String content, String username, String createdAt) {
+    String content, String username, String createdAt, int ProjectId) {
+  print('Project Title: $title');
+  print('Project Tag: $tag');
+  print('Project Content: $content');
+  print('Project Username: $username');
+  print('Project CreatedAt: $createdAt');
+  print('project id : $ProjectId');
+
   return Container(
     decoration: BoxDecoration(
       border: Border(bottom: BorderSide(color: strokeColor, width: 1)),
@@ -166,7 +188,7 @@ Widget buildProject(BuildContext context, String title, String tag,
             borderRadius: BorderRadius.circular(7),
           ),
           child:
-              Text(tag, style: TextStyle(fontSize: 14, color: secondTextColor)),
+          Text(tag, style: TextStyle(fontSize: 14, color: secondTextColor)),
         ),
         SizedBox(height: 12),
         Row(
