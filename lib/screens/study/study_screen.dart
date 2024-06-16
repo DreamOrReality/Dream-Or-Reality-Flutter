@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,7 +48,8 @@ class _StudyScreenState extends State<StudyScreen> {
         itemCount: projects.length, // 프로젝트 개수
         itemBuilder: (BuildContext context, int index) {
           final project = projects[index];
-          return buildProject(context, project['title'], project['content']);
+          return buildProject(
+              context, project['title'], project['tag'], project['content']);
         },
       ),
       // 플로팅 버튼
@@ -115,7 +117,8 @@ class _StudyScreenState extends State<StudyScreen> {
 }
 
 // 프로젝트 정보를 보여주는 위젯
-Widget buildProject(BuildContext context, String title, String content) {
+Widget buildProject(
+    BuildContext context, String title, String tag, String content) {
   return Container(
     decoration: BoxDecoration(
       border: Border(bottom: BorderSide(color: Colors.grey, width: 1)),
@@ -127,12 +130,25 @@ Widget buildProject(BuildContext context, String title, String content) {
         Text(
           title,
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 19,
           ),
         ),
         SizedBox(height: 8),
-        Text(content),
+        Text(
+          content,
+          style: TextStyle(fontSize: 16, color: secondTextColor),
+        ),
+        SizedBox(height: 8),
+        Container(
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: inputBackgroundColor,
+            border: Border.all(color: strokeColor),
+            borderRadius: BorderRadius.circular(7),
+          ),
+          child:
+              Text(tag, style: TextStyle(fontSize: 14, color: secondTextColor)),
+        ),
       ],
     ),
   );
