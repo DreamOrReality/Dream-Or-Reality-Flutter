@@ -113,9 +113,8 @@ class _MemoirScreenState extends State<MemoirScreen> {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          _truncateText(content), // 글이 너무 길면 줄여서 표시
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          content,
+                          overflow: TextOverflow.ellipsis, // 글자가 넘칠 경우 ...으로 표시
                         ),
                       ],
                     ),
@@ -172,14 +171,6 @@ class _MemoirScreenState extends State<MemoirScreen> {
         },
       ),
     );
-  }
-
-  String _truncateText(String text) {
-    const maxLength = 50; // 최대 길이 설정
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return '${text.substring(0, maxLength)}...'; // 글자 길이 초과 시 ...으로 줄이기
   }
 
   void showMyPageAlert(BuildContext context) {
