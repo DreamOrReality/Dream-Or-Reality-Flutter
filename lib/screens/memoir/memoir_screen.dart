@@ -100,7 +100,8 @@ class _MemoirScreenState extends State<MemoirScreen> {
                 ? Center(child: CircularProgressIndicator())
                 : memoirs.isEmpty
                     ? Center(
-                        child: Text('아직 회고록이 작성되지 않았어요..'),
+                        child: Text('아직 회고록이 작성되지 않았어요..',
+                            style: TextStyle(color: secondTextColor)),
                       )
                     : ListView.builder(
                         itemCount: memoirs.length + 1,
