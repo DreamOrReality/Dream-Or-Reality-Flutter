@@ -48,8 +48,8 @@ class _StudyScreenState extends State<StudyScreen> {
         itemCount: projects.length, // 프로젝트 개수
         itemBuilder: (BuildContext context, int index) {
           final project = projects[index];
-          return buildProject(
-              context, project['title'], project['tag'], project['content']);
+          return buildProject(context, project['title'], project['tag'],
+              project['content'], project['username'], project['createdAt']);
         },
       ),
       // 플로팅 버튼
@@ -117,8 +117,8 @@ class _StudyScreenState extends State<StudyScreen> {
 }
 
 // 프로젝트 정보를 보여주는 위젯
-Widget buildProject(
-    BuildContext context, String title, String tag, String content) {
+Widget buildProject(BuildContext context, String title, String tag,
+    String content, String username, String createdAt) {
   return Container(
     decoration: BoxDecoration(
       border: Border(bottom: BorderSide(color: Colors.grey, width: 1)),
@@ -133,12 +133,12 @@ Widget buildProject(
             fontSize: 19,
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 5),
         Text(
           content,
           style: TextStyle(fontSize: 16, color: secondTextColor),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 5),
         Container(
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
@@ -148,6 +148,14 @@ Widget buildProject(
           ),
           child:
               Text(tag, style: TextStyle(fontSize: 14, color: secondTextColor)),
+        ),
+        SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(username, style: TextStyle(color: secondTextColor)),
+            Text(' · $createdAt', style: TextStyle(color: secondTextColor))
+          ],
         ),
       ],
     ),
