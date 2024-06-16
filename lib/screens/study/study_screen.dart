@@ -121,7 +121,7 @@ Widget buildProject(BuildContext context, String title, String tag,
     String content, String username, String createdAt) {
   return Container(
     decoration: BoxDecoration(
-      border: Border(bottom: BorderSide(color: Colors.grey, width: 1)),
+      border: Border(bottom: BorderSide(color: strokeColor, width: 1)),
     ),
     padding: const EdgeInsets.all(20.0),
     child: Column(
