@@ -89,14 +89,23 @@ class _MemoirScreenState extends State<MemoirScreen> {
                 if (index == 0) {
                   // 첫 번째 아이템에는 선택된 날짜 표시
                   return ListTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          '${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
-                          style: TextStyle(color: primaryColor, fontSize: 19),
-                        ),
-                        Text(' 을 기록해요!', style: TextStyle(fontSize: 19)),
-                      ],
+                    title: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: strokeColor),
+                            top: BorderSide(color: strokeColor)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
+                            style: TextStyle(color: primaryColor, fontSize: 19),
+                          ),
+                          Text(' 을 기록해요!', style: TextStyle(fontSize: 19)),
+                        ],
+                      ),
                     ),
                   );
                 } else {
