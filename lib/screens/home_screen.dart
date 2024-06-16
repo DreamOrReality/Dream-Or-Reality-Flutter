@@ -144,13 +144,19 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildMyProject(context, 'STAC 개발 공모전', '2024-12-24'),
-                    SizedBox(height: 10),
-                    buildMyProject(context, 'Flutter로 쇼핑몰 제작', '2024-08-02'),
-                    SizedBox(height: 10),
-                    buildMyProject(context, '미림 소프트웨어 챌린지', '2024-07-21'),
-                  ],
+                  children: _projects.map(
+                    (project) {
+                      // 내가 진행중인 프로젝트를 불러옴
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: buildMyProject(
+                          context,
+                          project['title'],
+                          formatDate(project['deadline']),
+                        ),
+                      );
+                    },
+                  ).toList(),
                 ),
               ),
             ),
