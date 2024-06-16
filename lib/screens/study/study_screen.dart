@@ -61,9 +61,17 @@ class _StudyScreenState extends State<StudyScreen> {
               int projectId = project['ProjectId'];
               saveProjectId(projectId); // 프로젝트 ID 저장
               // 다른 화면으로 이동하거나 원하는 작업 수행
+              Navigator.pushNamed(context, '/study_detail',
+                  arguments: projectId);
             },
-            child: buildProject(context, project['title'], project['tag'],
-                project['content'], project['username'], project['createdAt'], project['ProjectId']),
+            child: buildProject(
+                context,
+                project['title'],
+                project['tag'],
+                project['content'],
+                project['username'],
+                project['createdAt'],
+                project['ProjectId']),
           );
         },
       ),
@@ -94,7 +102,7 @@ class _StudyScreenState extends State<StudyScreen> {
             case 0:
               Navigator.of(context).pushNamedAndRemoveUntil(
                 '/',
-                    (Route<dynamic> route) => false, // 모든 페이지를 pop
+                (Route<dynamic> route) => false, // 모든 페이지를 pop
               );
               break;
             case 2:
@@ -188,7 +196,7 @@ Widget buildProject(BuildContext context, String title, String tag,
             borderRadius: BorderRadius.circular(7),
           ),
           child:
-          Text(tag, style: TextStyle(fontSize: 14, color: secondTextColor)),
+              Text(tag, style: TextStyle(fontSize: 14, color: secondTextColor)),
         ),
         SizedBox(height: 12),
         Row(

@@ -13,6 +13,7 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int projectId = ModalRoute.of(context)?.settings.arguments as int;
     return Scaffold(
       appBar: AppBar(
         title: Text('게시글'),
