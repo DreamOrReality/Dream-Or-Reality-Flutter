@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dream_or_reality/screens/memoir/write_memoir_screen.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 import 'package:flutter_dream_or_reality/widgets/memoir_calendar_widget.dart';
-
 import '../../widgets/bottom_navtion_bar_widget.dart';
 
 class MemoirScreen extends StatefulWidget {
@@ -13,18 +15,54 @@ class MemoirScreen extends StatefulWidget {
 }
 
 class _MemoirScreenState extends State<MemoirScreen> {
-  // 선택된 날짜를 관리하는 변수
   DateTime selectedDate = DateTime.utc(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
   );
 
-  // 선택된 날짜를 업데이트
+  int? userId;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserId();
+  }
+
+  Future<void> _loadUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getInt('userId');
+    });
+  }
+
   void onDaySelected(DateTime selectedDate, DateTime focusedDate) {
     setState(() {
       this.selectedDate = selectedDate;
     });
+    fetchMemoir(selectedDate);
+  }
+
+  Future<void> fetchMemoir(DateTime date) async {
+    if (userId == null) return;
+
+    final response = await http.post(
+      Uri.parse('http://43.202.54.53:3000/user/getMemoir'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'UserId': userId,
+        'date': date.toIso8601String().split('T').first,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final memoir = jsonDecode(response.body);
+      print('Memoir: ${memoir[0]['content']}');
+    } else {
+      print('Failed to load memoir');
+    }
   }
 
   @override
@@ -37,19 +75,17 @@ class _MemoirScreenState extends State<MemoirScreen> {
       body: Column(
         children: [
           MemoirCalendarWidget(
-            selectedDate: selectedDate, // 현재 선택된 날짜 전달
-            onDaySelected: onDaySelected, // 날짜 선택 시 호출될 콜백 함수 설정
+            selectedDate: selectedDate,
+            onDaySelected: onDaySelected,
           ),
         ],
       ),
-      // 플로팅 버튼
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) =>
-                      WriteMemoirScreen(selectedDate: selectedDate)));
+                  builder: (_) => WriteMemoirScreen(selectedDate: selectedDate)));
         },
         icon: const Icon(
           Icons.add,
@@ -62,7 +98,6 @@ class _MemoirScreenState extends State<MemoirScreen> {
         ),
         backgroundColor: primaryColor,
       ),
-      // 하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 2,
         onTap: (index) {
@@ -70,7 +105,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
             case 0:
               Navigator.of(context).pushNamedAndRemoveUntil(
                 '/',
-                (Route<dynamic> route) => false, // 모든 페이지를 pop
+                    (Route<dynamic> route) => false,
               );
               break;
             case 1:
