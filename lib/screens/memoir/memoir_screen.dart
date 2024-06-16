@@ -22,7 +22,8 @@ class _MemoirScreenState extends State<MemoirScreen> {
   );
 
   int? userId;
-  List<dynamic> memoirs = []; // List to store fetched memoirs
+  Map<DateTime, List<dynamic>> memoirMap =
+      {}; // Map to store fetched memoirs for each date
 
   @override
   void initState() {
@@ -60,7 +61,8 @@ class _MemoirScreenState extends State<MemoirScreen> {
 
     if (response.statusCode == 200) {
       setState(() {
-        memoirs = jsonDecode(response.body);
+        List<dynamic> memoirs = jsonDecode(response.body);
+        memoirMap[date] = memoirs;
       });
     } else {
       print('Failed to load memoir');
@@ -84,23 +86,34 @@ class _MemoirScreenState extends State<MemoirScreen> {
           // 리스트뷰
           Expanded(
             child: ListView.builder(
-              itemCount: memoirs.length,
+              itemCount: memoirMap.containsKey(selectedDate)
+                  ? memoirMap[selectedDate]!.length + 1
+                  : 1,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 8),
-                      Text('${memoirs[index]['content']}'),
-                      // Add more details or customize ListTile content as needed
-                    ],
-                  ),
-                  // Add onTap if you want to handle tap events on the ListTile
-                );
+                if (index == 0) {
+                  // 첫 번째 아이템에는 선택된 날짜 표시
+                  return ListTile(
+                    title: Text(
+                      'Selected Date: ${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  );
+                } else {
+                  // Memoir 데이터가 있는 경우 해당 날짜의 Memoir 표시
+                  final memoirs = memoirMap[selectedDate];
+                  if (memoirs != null && memoirs.isNotEmpty) {
+                    final memoirIndex = index - 1;
+                    return ListTile(
+                      title: Text('${memoirs[memoirIndex]['content']}'),
+                      // 추가적인 디테일 추가나 필요한 사항 적용
+                    );
+                  } else {
+                    // Memoir 데이터가 없는 경우 '데이터가 없습니다' 메시지 표시
+                    return ListTile(
+                      title: Text('데이터가 없습니다'),
+                    );
+                  }
+                }
               },
             ),
           ),
