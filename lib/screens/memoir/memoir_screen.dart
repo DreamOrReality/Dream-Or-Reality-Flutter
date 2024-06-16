@@ -22,6 +22,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
   );
 
   int? userId;
+  List<dynamic> memoirs = []; // List to store fetched memoirs
 
   @override
   void initState() {
@@ -58,8 +59,9 @@ class _MemoirScreenState extends State<MemoirScreen> {
     );
 
     if (response.statusCode == 200) {
-      final memoir = jsonDecode(response.body);
-      print('Memoir: ${memoir[0]['content']}');
+      setState(() {
+        memoirs = jsonDecode(response.body);
+      });
     } else {
       print('Failed to load memoir');
     }
@@ -74,18 +76,45 @@ class _MemoirScreenState extends State<MemoirScreen> {
       ),
       body: Column(
         children: [
+          // 캘린더
           MemoirCalendarWidget(
             selectedDate: selectedDate,
             onDaySelected: onDaySelected,
           ),
+          // 리스트뷰
+          Expanded(
+            child: ListView.builder(
+              itemCount: memoirs.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${selectedDate.year}-${selectedDate.month}-${selectedDate.day}',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 8),
+                      Text('${memoirs[index]['content']}'),
+                      // Add more details or customize ListTile content as needed
+                    ],
+                  ),
+                  // Add onTap if you want to handle tap events on the ListTile
+                );
+              },
+            ),
+          ),
         ],
       ),
+      // 플로팅 버튼
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => WriteMemoirScreen(selectedDate: selectedDate)));
+            context,
+            MaterialPageRoute(
+              builder: (_) => WriteMemoirScreen(selectedDate: selectedDate),
+            ),
+          );
         },
         icon: const Icon(
           Icons.add,
@@ -94,10 +123,14 @@ class _MemoirScreenState extends State<MemoirScreen> {
         label: const Text(
           '글쓰기',
           style: TextStyle(
-              fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+            fontSize: 17,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: primaryColor,
       ),
+      // 하단 내비게이션 바
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 2,
         onTap: (index) {
@@ -105,7 +138,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
             case 0:
               Navigator.of(context).pushNamedAndRemoveUntil(
                 '/',
-                    (Route<dynamic> route) => false,
+                (Route<dynamic> route) => false,
               );
               break;
             case 1:
