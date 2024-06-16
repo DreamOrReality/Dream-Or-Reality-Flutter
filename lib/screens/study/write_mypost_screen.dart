@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 import '../../theme/color.dart';
 
@@ -12,10 +14,10 @@ class WriteMyPostScreen extends StatefulWidget {
 
 class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
   // 작성 목록
-  late String postTitle;
-  late String postTag;
-  late String postContent;
-  late int recuritCount;
+  late String postTitle = '';
+  late String postTag = '';
+  late String postContent = '';
+  late int recuritCount = 0;
   DateTime? deadline;
 
   // 태그 - 해당 분야 목록
@@ -29,14 +31,30 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
   ];
 
   // 데이터 베이스 저장 로직
-  void savePostToDatabase(String title, String tag, String content, int recurit,
-      DateTime deadline) {
-    // Save to database
-    print("Title: $title");
-    print("Tag: $tag");
-    print("Content: $content");
-    print("Recurit: $recurit");
-    print("Deadline: ${DateFormat('yyyy-MM-dd').format(deadline)}");
+  Future<void> savePostToDatabase() async {
+    final url = Uri.parse('http://43.202.54.53:3000/user/saveProjects');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'UserId': 1, // Replace with actual user id
+        'title': postTitle,
+        'tag': postTag,
+        'content': postContent,
+        'recruit': recuritCount,
+        'deadline': DateFormat('yyyy-MM-dd').format(deadline!),
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("프로젝트를 성공적으로 저장했습니다.")),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("오류가 발생했습니다.")),
+      );
+    }
   }
 
   @override
@@ -69,8 +87,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (deadline != null) {
-                      savePostToDatabase(postTitle, postTag, postContent,
-                          recuritCount, deadline!);
+                      savePostToDatabase();
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("마감일을 선택해주세요.")));
