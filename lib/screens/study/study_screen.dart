@@ -127,13 +127,30 @@ Widget buildProject(BuildContext context, String title, String tag,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 19,
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(5),
+              width: 55,
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text('모집중',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white)),
+            ),
+            SizedBox(width: 13),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 19,
+              ),
+            ),
+          ],
         ),
-        SizedBox(height: 5),
+        SizedBox(height: 10),
         Text(
           content,
           style: TextStyle(fontSize: 16, color: secondTextColor),
