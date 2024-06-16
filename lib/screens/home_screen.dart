@@ -98,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
             buildTestBanner(context),
             buildMyPostTitle(context, _userName ?? 'Unknown'), // 로그인한 유저네임 불러오기
             // 나의 게시글
-            // 지안 여기 Description이라고 되어있는거 모집 기한? 그 날짜로 바꿔주라
             Container(
               padding: const EdgeInsets.only(bottom: 25.0),
               width: MediaQuery.of(context).size.width,
@@ -108,17 +107,27 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  // 나의 게시글을 불러옴
                   children: [
-                    SizedBox(width: 25), //이건 지우지 말것
-                    buildMyPost(context, "스택 프론트엔드 개발자 구해요~", "2024-07-01", 1),
-                    SizedBox(width: 10),
-                    buildMyPost(context, "앱잼 같이 참여하실 분!", "2024-08-15", 1),
-                    SizedBox(width: 10),
-                    buildMyPost(context, "미림 소프트웨어 챌린지", "2024-09-01", 1),
-                    SizedBox(width: 10),
-                    buildMyPost(context, "미림 소프트웨어 챌린지", "2024-09-01", 1),
-                    SizedBox(width: 10),
+                    SizedBox(width: 25),
+                    Row(
+                      // 나의 게시글을 불러옴
+                      children: _projects.map(
+                        (project) {
+                          // 내가 진행중인 프로젝트를 불러옴
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: buildMyPost(
+                                  context,
+                                  project['title'],
+                                  formatDate(project['deadline']),
+                                  project['recruit']),
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
                   ],
                 ),
               ),
