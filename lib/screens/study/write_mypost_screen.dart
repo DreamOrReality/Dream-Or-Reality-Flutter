@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dream_or_reality/screens/study/study_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -37,7 +38,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'UserId': 2, // Replace with actual user id
+        'UserId': 1, // Replace with actual user id
         'title': postTitle,
         'tag': postTag,
         'content': postContent,
@@ -50,7 +51,10 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("프로젝트를 성공적으로 저장했습니다.")),
       );
-      Navigator.pop(context, "/study");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => StudyScreen()),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("오류가 발생했습니다.")),
