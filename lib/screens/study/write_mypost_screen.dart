@@ -50,6 +50,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("프로젝트를 성공적으로 저장했습니다.")),
       );
+      Navigator.pop(context, "/study");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("오류가 발생했습니다.")),
