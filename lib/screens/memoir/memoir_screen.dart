@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dream_or_reality/screens/memoir/write_memoir_screen.dart';
 import 'package:flutter_dream_or_reality/theme/color.dart';
 import 'package:flutter_dream_or_reality/widgets/memoir_calendar_widget.dart';
+import 'package:table_calendar/table_calendar.dart';
+
 import '../../widgets/bottom_navtion_bar_widget.dart';
 
 class MemoirScreen extends StatefulWidget {
@@ -23,6 +25,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
 
   int? userId;
   List<dynamic> memoirs = []; // List to store fetched memoirs
+  Map<DateTime, List<dynamic>> events = {}; // 날짜별 이벤트 데이터를 저장할 맵
   bool isLoading = false; // Flag to indicate data loading state
 
   @override
@@ -36,6 +39,7 @@ class _MemoirScreenState extends State<MemoirScreen> {
     setState(() {
       userId = prefs.getInt('userId');
     });
+    fetchMemoir(selectedDate);
   }
 
   void onDaySelected(DateTime selectedDate, DateTime focusedDate) {
@@ -68,14 +72,18 @@ class _MemoirScreenState extends State<MemoirScreen> {
     });
 
     if (response.statusCode == 200) {
+      List<dynamic> fetchedMemoirs = jsonDecode(response.body);
       setState(() {
-        memoirs = jsonDecode(response.body);
+        memoirs = fetchedMemoirs;
+        // 받은 메모 데이터를 events 맵에 저장
+        events[date] = fetchedMemoirs;
       });
     } else {
       print('Failed to load memoir');
       // Memoir 데이터를 로드할 수 없는 경우 memoirs를 비워줍니다.
       setState(() {
         memoirs = [];
+        events[date] = [];
       });
     }
   }
@@ -90,9 +98,51 @@ class _MemoirScreenState extends State<MemoirScreen> {
       body: Column(
         children: [
           // 캘린더
-          MemoirCalendarWidget(
-            selectedDate: selectedDate,
-            onDaySelected: onDaySelected,
+          TableCalendar(
+            onDaySelected: onDaySelected, // 날짜 선택 시 호출될 콜백 함수 설정
+            selectedDayPredicate: (date) {
+              // 선택된 날짜와 현재 날짜가 같은지 확인하여 선택된 날짜를 표시함.
+              return isSameDay(selectedDate, date);
+            },
+            focusedDay: DateTime.now(), //현재 날짜 포커스
+            firstDay: DateTime(2022), // min
+            lastDay: DateTime(2025), // max
+            calendarStyle: CalendarStyle(
+              selectedDecoration: BoxDecoration(
+                color: secondaryColor, // 선택된 날짜의 배경색을 검정색으로 설정
+                shape: BoxShape.circle, // 선택된 날짜를 동그랗게 표시
+              ),
+              todayDecoration: BoxDecoration(
+                color: primaryColor,
+                shape: BoxShape.circle,
+              ),
+              markerDecoration: BoxDecoration(
+                color: Colors.blue, // 이벤트 표시 색
+                shape: BoxShape.circle,
+              ),
+            ),
+            eventLoader: (day) {
+              return events[day] ?? [];
+            },
+            calendarBuilders: CalendarBuilders(
+              markerBuilder: (context, date, events) {
+                if (events.isNotEmpty) {
+                  return Positioned(
+                    right: 1,
+                    bottom: 1,
+                    child: Container(
+                      width: 7,
+                      height: 7,
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  );
+                }
+                return null;
+              },
+            ),
           ),
           // 리스트뷰 혹은 메시지 출력
           Expanded(
