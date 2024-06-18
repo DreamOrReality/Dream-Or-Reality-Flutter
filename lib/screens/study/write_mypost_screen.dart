@@ -38,7 +38,7 @@ class _WriteMyPostScreenState extends State<WriteMyPostScreen> {
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'UserId': 1, // Replace with actual user id
+        'UserId': 2, // Replace with actual user id
         'title': postTitle,
         'tag': postTag,
         'content': postContent,
