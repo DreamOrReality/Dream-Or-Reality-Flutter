@@ -172,10 +172,15 @@ Widget buildProject(BuildContext context, String title, String tag,
                   style: TextStyle(color: Colors.white, fontSize: 13)),
             ),
             SizedBox(width: 13),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 19,
+            Expanded(
+              // Expanded 위젯을 사용하여 제목이 남은 공간을 차지하게 함
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 19,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ),
           ],
