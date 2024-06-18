@@ -169,7 +169,7 @@ Widget buildProject(BuildContext context, String title, String tag,
               ),
               child: Text('모집중',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white)),
+                  style: TextStyle(color: Colors.white, fontSize: 13)),
             ),
             SizedBox(width: 13),
             Text(
