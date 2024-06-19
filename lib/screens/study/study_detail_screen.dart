@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_dream_or_reality/theme/color.dart';
 
 class StudyDetailScreen extends StatefulWidget {
@@ -10,11 +13,52 @@ class StudyDetailScreen extends StatefulWidget {
 
 class _StudyDetailScreenState extends State<StudyDetailScreen> {
   final TextEditingController _commentController = TextEditingController();
+  List<dynamic> projects = [];
+  Map<String, dynamic>? projectDetail;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProjects();
+  }
+
+  Future<void> fetchProjects() async {
+    final response = await http.post(
+      Uri.parse('http://43.202.54.53:3000/user/getAllProjects'),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        projects = json.decode(response.body);
+      });
+    } else {
+      throw Exception('Failed to load projects');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     // 프로젝트 아이디 !
     final int projectId = ModalRoute.of(context)?.settings.arguments as int;
+
+    // Find the specific project by projectId
+    if (projects.isNotEmpty) {
+      projectDetail = projects.firstWhere(
+          (project) => project['ProjectId'] == projectId,
+          orElse: () => null);
+    }
+
+    if (projectDetail == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('게시글'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Text('프로젝트를 찾을 수 없습니다.'),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -25,9 +69,10 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildDetailHeader(context, 'IT 서비스 공모전에 참여하실 디자인과 분을 모십니다!', '짱지안',
-                '상금이 500만원인 공모전에 참여하실 디자이너분을 모집합니다. 저희는 1주일에 2번 화상회의를 합니다.\n\n저희 팀은 각종 서비스 공모전에서 시상을 할 만큼 능력있는 개발자로 꾸려져 있으나 현재 디자인 인력이 부족한 팀입니다. 피그마를 잘 다룰줄 알며, 어느 정도 기본기가 탄탄한 디자이너를 구합니다.\n\n댓글 남겨주시면 연락드리겠습니다.'),
-            buildDetailInfo(context, '2024-06-22', 3, 'UI/UX 디자이너'),
+            buildDetailHeader(context, projectDetail!['title'], '짱지안',
+                projectDetail!['content']),
+            buildDetailInfo(context, projectDetail!['deadline'],
+                projectDetail!['recruit'], projectDetail!['tag']),
             buildCommentSection(),
             buildShowCommentSection(context, '재현땅', '2024-06-18 15:12:07',
                 '저 디자인 쌈@뽕합니다! d2233@e-mirim.hs.kr 컨택 기다리겠습니다!'),
@@ -43,6 +88,7 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
   Widget buildDetailHeader(
       BuildContext context, String title, String username, String contents) {
     return Container(
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: strokeColor, width: 2)),
       ),
