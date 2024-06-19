@@ -69,7 +69,7 @@ class _StudyDetailScreenState extends State<StudyDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildDetailHeader(context, projectDetail!['title'], '짱지안',
+            buildDetailHeader(context, projectDetail!['title'], '햄지땅',
                 projectDetail!['content']),
             buildDetailInfo(context, projectDetail!['deadline'],
                 projectDetail!['recruit'], projectDetail!['tag']),
